@@ -2,7 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#214E92">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="light-content">
 <title>Orcières 1850 — Application</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -53,6 +56,19 @@ body{
 .sb{height:44px;padding:12px 20px 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:var(--white);z-index:90;}
 .sb-t{font-family:'Barlow',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
 .sb-i{display:flex;gap:5px;align-items:center;}
+
+/* ── MOBILE: plein écran, pas de cadre ── */
+@media(max-width:500px){
+  body{background:var(--white);padding:0;margin:0;align-items:stretch;}
+  .hint{display:none;}
+  .phone{width:100%;height:100vh;height:100dvh;border:none;border-radius:0;box-shadow:none;}
+  .notch{display:none;}
+  .sb{display:none;}
+  .home-header{padding-top:calc(14px + env(safe-area-inset-top));}
+  .navbar{padding-top:calc(10px + env(safe-area-inset-top));}
+  .bnav{padding-bottom:calc(18px + env(safe-area-inset-bottom));}
+  .bbar{padding-bottom:calc(18px + env(safe-area-inset-bottom));}
+}
 
 /* screens */
 .screens{flex:1;overflow:hidden;position:relative;}
@@ -461,7 +477,7 @@ body{
     <div class="screen active" id="s0">
       <!-- Header -->
       <div class="home-header">
-        <div class="hh-greet">Bonjour</div>
+        <div class="hh-greet">Salut</div>
         <div class="hh-brand">Orcières Merlette</div>
         <div class="hh-sub">Arena 1850 — Ouverture déc. 2026</div>
         <div class="hh-title">Que souhaitez-vous<br>réserver ?</div>
