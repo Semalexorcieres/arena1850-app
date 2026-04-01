@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Orcières 1850 — Application</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+:root {
+  --blue:    #214E92;
+  --blue-d:  #173870;
+  --blue-dd: #0f2448;
+  --blue-l:  #e8eef8;
+  --blue-ll: #f3f6fc;
+  --white:   #ffffff;
+  --g1:      #f5f7fc;
+  --g2:      #e6edf7;
+  --g3:      #c4cfdf;
+  --g4:      #7a8ba8;
+  --g5:      #3a4a62;
+  --text:    #192038;
+  --text2:   #4a5872;
+  --text3:   #8b9ab8;
+  --ok:      #15693e;
+  --ok-bg:   #eaf4ef;
+  --warn:    #7a4e00;
+  --warn-bg: #fef5e4;
+  --bdr:     #dce5f2;
+  --r:       10px;
+  --rl:      16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+
+body{
+  background:#c8d2e8;
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;padding:20px 16px 48px;
+  font-family:'Inter',sans-serif;
+}
+.hint{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#7a8ba8;margin-bottom:12px;}
+
+/* ── PHONE ── */
+.phone{
+  width:390px;height:844px;background:var(--white);
+  border-radius:48px;border:2px solid #b4bfd8;
+  box-shadow:0 0 0 7px #b8c2d8,0 28px 70px rgba(8,18,45,.35);
+  overflow:hidden;display:flex;flex-direction:column;position:relative;
+}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:32px;background:var(--white);border-radius:0 0 20px 20px;z-index:100;display:flex;align-items:center;justify-content:center;gap:6px;}
+.nb{width:40px;height:4px;border-radius:3px;background:var(--g2);}
+.nc{width:9px;height:9px;border-radius:50%;background:var(--g2);}
+.sb{height:44px;padding:12px 20px 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:var(--white);z-index:90;}
+.sb-t{font-family:'Barlow',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
+.sb-i{display:flex;gap:5px;align-items:center;}
+
+/* screens */
+.screens{flex:1;overflow:hidden;position:relative;}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;opacity:0;transform:translateX(28px);pointer-events:none;transition:opacity .28s ease,transform .28s ease;scrollbar-width:none;background:var(--white);}
+.screen::-webkit-scrollbar{display:none;}
+.screen.active{opacity:1;transform:translateX(0);pointer-events:all;}
+.screen.exit{opacity:0;transform:translateX(-28px);}
+
+/* ── NAV BAR ── */
+.navbar{background:var(--blue);padding:10px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;position:sticky;top:0;z-index:80;}
+.bk{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s;}
+.bk:active{background:rgba(255,255,255,.28);}
+.nt{font-family:'Barlow',sans-serif;font-size:15px;font-weight:700;color:#fff;flex:1;}
+.logo-link{display:flex;flex-direction:column;align-items:flex-end;cursor:pointer;text-decoration:none;}
+.logo-link:active{opacity:.7;}
+.lm{font-family:'Barlow',sans-serif;font-size:14px;font-weight:800;color:#fff;line-height:1;}
+.ls{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.03em;}
+
+/* ── PROGRESS ── */
+.prog{padding:10px 16px 8px;background:var(--blue-ll);border-bottom:1px solid var(--bdr);flex-shrink:0;}
+.pt{height:3px;background:var(--g2);border-radius:2px;overflow:hidden;}
+.pf{height:100%;background:var(--blue);border-radius:2px;transition:width .4s ease;}
+.pm{display:flex;justify-content:space-between;margin-top:5px;font-size:11px;color:var(--text3);}
+.ps{font-weight:600;color:var(--blue);}
+
+/* ══════════════════════════════════════
+   HOME — redesign SNCF Connect style
+   ══════════════════════════════════════ */
+.home-header{
+  background:var(--blue);
+  padding:14px 20px 20px;
+  flex-shrink:0;
+}
+.hh-greet{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:1px;display:flex;align-items:center;gap:4px;}
+.hh-brand{font-family:'Barlow',sans-serif;font-size:17px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:10px;}
+.hh-sub{font-size:11px;color:rgba(255,255,255,.45);margin-bottom:4px;}
+.hh-title{font-family:'Barlow',sans-serif;font-size:22px;font-weight:800;color:#fff;line-height:1.15;}
+
+/* Category pills */
+.cat-pills{display:flex;gap:8px;margin-top:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;}
+.cat-pills::-webkit-scrollbar{display:none;}
+.cpill{
+  flex-shrink:0;display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  color:#fff;font-size:12px;font-weight:600;
+  padding:7px 14px;border-radius:24px;cursor:pointer;
+  white-space:nowrap;transition:background .15s;
+}
+.cpill:active{background:rgba(255,255,255,.25);}
+.cpill svg{width:15px;height:15px;stroke-width:2.2;}
+
+/* Quick access row */
+.qa-strip{
+  display:flex;justify-content:space-around;
+  padding:16px 20px;
+  border-bottom:1px solid var(--bdr);
+  background:var(--white);
+}
+.qa2{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
+.qa2:active .qa2-ico{background:var(--g2);}
+.qa2-ico{
+  width:48px;height:48px;border-radius:14px;
+  background:var(--g1);border:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s;
+}
+.qa2-ico svg{width:22px;height:22px;color:var(--blue-d);stroke-width:1.8;}
+.qa2-lbl{font-size:10px;color:var(--text2);font-weight:500;}
+
+/* ── SECTION ── */
+.sec{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 10px;}
+.sec-t{font-family:'Barlow',sans-serif;font-size:17px;font-weight:700;color:var(--text);}
+.sec-l{font-size:12px;color:var(--blue);font-weight:600;cursor:pointer;}
+
+/* ── ACTIVITY CARDS ── */
+.cards-row{display:flex;gap:12px;padding:0 20px 20px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;min-height:220px;}
+.cards-row::-webkit-scrollbar{display:none;}
+.acard{
+  flex-shrink:0;width:170px;min-height:210px;
+  border:1px solid var(--bdr);border-radius:18px;
+  overflow:hidden;background:var(--white);
+  cursor:pointer;transition:transform .15s;
+  box-shadow:0 2px 8px rgba(33,78,146,.06);
+}
+.acard:active{transform:scale(.97);}
+.ac-img{
+  height:110px;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.ac-img svg{width:48px;height:48px;color:rgba(255,255,255,.85);stroke-width:1.5;position:relative;z-index:1;}
+.img-kara{background:linear-gradient(145deg,#2a2060,#4030a0,#6040c0);}
+.img-bowl{background:linear-gradient(145deg,#1a3070,#2850a0,#3870d0);}
+.img-pisc{background:linear-gradient(145deg,#0a3858,#106898,#1890c8);}
+.img-pati{background:linear-gradient(145deg,#163570,#2050a0);}
+.img-aqua{background:linear-gradient(145deg,#0a3848,#185870,#2080a0);}
+.img-spa {background:linear-gradient(145deg,#2a2060,#3a3090,#5040b0);}
+.img-padel{background:linear-gradient(145deg,#104040,#1a6060,#208888);}
+.ac-new{
+  position:absolute;top:8px;right:8px;
+  font-size:9px;font-weight:700;
+  background:rgba(255,255,255,.2);backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.3);
+  color:#fff;padding:3px 8px;border-radius:10px;
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.ac-body{padding:10px 12px 12px;}
+.ac-name{font-family:'Barlow',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.ac-meta{font-size:11px;color:var(--text3);line-height:1.35;}
+.ac-price{font-family:'Barlow',sans-serif;font-size:12px;font-weight:700;color:var(--blue);margin-top:6px;}
+.ac-btn{
+  width:100%;margin-top:8px;padding:8px;
+  background:var(--blue);border:none;border-radius:8px;
+  font-family:'Barlow',sans-serif;font-size:12px;font-weight:700;
+  color:#fff;cursor:pointer;transition:background .15s;
+  display:flex;align-items:center;justify-content:center;gap:4px;
+}
+.ac-btn:active{background:var(--blue-d);}
+
+/* ── FORFAIT BANNER ── */
+.forf-banner{
+  margin:0 20px 20px;background:var(--blue);border-radius:18px;
+  padding:18px 20px;display:flex;align-items:center;gap:14px;
+  cursor:pointer;overflow:hidden;position:relative;
+}
+.forf-banner::before{content:'';position:absolute;right:-20px;top:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.06);}
+.forf-banner::after{content:'';position:absolute;right:30px;bottom:-30px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.04);}
+.fb-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.fb-icon svg{width:22px;height:22px;color:#fff;stroke-width:1.8;}
+.fb-t{font-family:'Barlow',sans-serif;font-size:15px;font-weight:700;color:#fff;}
+.fb-s{font-size:11px;color:rgba(255,255,255,.55);margin-top:2px;}
+.fb-arr{
+  margin-left:auto;width:28px;height:28px;border-radius:50%;
+  background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.fb-arr svg{width:16px;height:16px;color:rgba(255,255,255,.6);stroke-width:2;}
+
+/* ── AGENDA ── */
+.agenda-list{padding:0 20px 16px;display:flex;flex-direction:column;gap:8px;}
+.ag-item{display:flex;align-items:center;gap:12px;background:var(--g1);border-radius:12px;padding:12px 14px;cursor:pointer;transition:background .15s;}
+.ag-item:active{background:var(--g2);}
+.ag-date{text-align:center;flex-shrink:0;width:40px;}
+.ag-d{font-family:'Barlow',sans-serif;font-size:19px;font-weight:800;color:var(--blue);line-height:1;}
+.ag-m{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);}
+.ag-info{flex:1;}
+.ag-t{font-size:13px;font-weight:600;color:var(--text);}
+.ag-s{font-size:11px;color:var(--text3);margin-top:2px;}
+.ag-tag{font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;flex-shrink:0;}
+.tg-free{background:var(--ok-bg);color:var(--ok);}
+.tg-paid{background:var(--blue-l);color:var(--blue);}
+
+/* ── BOTTOM NAV (4 items like screenshot) ── */
+.bnav{
+  background:var(--white);border-top:1px solid var(--bdr);
+  display:flex;flex-shrink:0;padding:8px 0 18px;
+}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:5px 0;}
+.bn-ico{display:flex;align-items:center;justify-content:center;width:28px;height:28px;}
+.bn-ico svg{width:20px;height:20px;stroke-width:1.8;color:var(--text3);}
+.bn-lbl{font-size:10px;font-weight:600;color:var(--text3);}
+.bn.on .bn-lbl{color:var(--blue);}
+.bn.on .bn-ico svg{color:var(--blue);}
+.bn.on .bn-ico{background:var(--blue-l);border-radius:10px;padding:2px 12px;width:auto;}
+
+/* ══════════════════════════════════════
+   TUNNEL SCREENS — keep existing styles
+   ══════════════════════════════════════ */
+
+/* ── HOME TOP (legacy, kept for other screens) ── */
+.home-head{background:var(--blue);padding:0 16px 18px;}
+.hw{font-size:11px;color:rgba(255,255,255,.55);margin-bottom:2px;}
+.ht{font-family:'Barlow',sans-serif;font-size:21px;font-weight:800;color:#fff;line-height:1.1;}
+.quick-pills{display:flex;gap:7px;margin-top:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:1px;}
+.quick-pills::-webkit-scrollbar{display:none;}
+.qp{flex-shrink:0;display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:11px;font-weight:600;padding:5px 11px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:background .15s;}
+.qp:active{background:rgba(255,255,255,.22);}
+
+/* ── TUNNEL: fiche activité ── */
+.act-hero{background:var(--blue);padding:14px 16px 20px;position:relative;overflow:hidden;flex-shrink:0;}
+.ah-bg{position:absolute;right:-15px;top:-15px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.05);}
+.ah-eyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:3px;}
+.ah-title{font-family:'Barlow',sans-serif;font-size:23px;font-weight:800;color:#fff;line-height:1.05;}
+.ah-sub{font-size:12px;color:rgba(255,255,255,.6);margin-top:3px;}
+.ah-ico{position:absolute;right:22px;top:16px;opacity:.15;display:flex;}
+.ah-ico svg{width:56px;height:56px;color:#fff;stroke-width:1.2;}
+.incl{padding:0 16px;display:flex;flex-direction:column;gap:6px;margin-bottom:4px;}
+.incl-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);}
+.ic-ok{color:var(--ok);font-weight:700;}
+.ic-plus{color:var(--blue);font-weight:700;}
+.infop{padding:12px 16px 8px;font-size:13px;color:var(--text2);line-height:1.6;}
+
+/* ── SELECTOR TABS ── */
+.sel-tabs{display:flex;gap:0;margin:12px 16px;border:1.5px solid var(--bdr);border-radius:var(--r);overflow:hidden;}
+.sel-tab{flex:1;padding:10px 4px;text-align:center;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;background:var(--white);border-right:1px solid var(--bdr);transition:all .15s;}
+.sel-tab:last-child{border-right:none;}
+.sel-tab.on{background:var(--blue);color:#fff;}
+
+/* ── CARDS grid select ── */
+.card-list{padding:0 16px;display:flex;flex-direction:column;gap:9px;}
+.sc{border:1.5px solid var(--bdr);border-radius:var(--r);padding:12px;cursor:pointer;display:flex;align-items:center;gap:12px;background:var(--white);transition:all .2s;}
+.sc:active{transform:scale(.985);}
+.sc.on{border-color:var(--blue);background:var(--blue-ll);}
+.sc-ico{width:46px;height:46px;border-radius:10px;background:var(--blue-l);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sc-ico svg{width:22px;height:22px;color:var(--blue);stroke-width:1.8;}
+.sc.on .sc-ico{background:#d2dcf4;}
+.sc-info{flex:1;}
+.sc-n{font-family:'Barlow',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.sc-m{font-size:11px;color:var(--text3);}
+.sc-tags{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap;}
+.sc-tag{font-size:10px;color:var(--text3);background:var(--g1);border:1px solid var(--bdr);border-radius:5px;padding:1px 6px;}
+.sc-p{text-align:right;flex-shrink:0;}
+.sc-pv{font-family:'Barlow',sans-serif;font-size:17px;font-weight:800;color:var(--blue);}
+.sc-pu{font-size:10px;color:var(--text3);}
+.sc-bdg{font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;margin-top:3px;display:inline-block;}
+.b-pop{background:var(--blue-l);color:var(--blue);}
+.b-new{background:var(--ok-bg);color:var(--ok);}
+.b-vip{background:#f0ebff;color:#6030a8;}
+
+/* ── DIVIDER ── */
+.div{height:1px;background:var(--bdr);margin:10px 16px;}
+
+/* ── DATE ── */
+.date-row{display:flex;gap:7px;padding:0 16px;overflow-x:auto;scrollbar-width:none;}
+.date-row::-webkit-scrollbar{display:none;}
+.dc{flex-shrink:0;width:52px;height:62px;border:1.5px solid var(--bdr);border-radius:10px;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;}
+.dc.on{border-color:var(--blue);background:var(--blue-ll);}
+.dc.dis{opacity:.35;cursor:default;}
+.dc-d{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);}
+.dc-n{font-family:'Barlow',sans-serif;font-size:20px;font-weight:700;color:var(--text);line-height:1.2;}
+.dc.on .dc-d,.dc.on .dc-n{color:var(--blue);}
+.dc-dot{width:4px;height:4px;border-radius:50%;background:var(--ok);margin-top:3px;}
+
+/* ── SLOTS ── */
+.slots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:0 16px;}
+.slot{border:1.5px solid var(--bdr);border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;background:var(--white);transition:all .2s;}
+.slot.on{border-color:var(--blue);background:var(--blue-ll);}
+.slot.full{opacity:.4;cursor:default;}
+.sl-t{font-family:'Barlow',sans-serif;font-size:13px;font-weight:700;color:var(--text);}
+.slot.on .sl-t{color:var(--blue);}
+.slot.full .sl-t{text-decoration:line-through;color:var(--text3);}
+.sl-a{font-size:10px;color:var(--text3);margin-top:2px;}
+.sl-a.lo{color:var(--warn);}
+
+/* ── DUR ── */
+.dur-row{display:flex;gap:7px;padding:0 16px;}
+.dur{flex:1;border:1.5px solid var(--bdr);border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;background:var(--white);transition:all .2s;}
+.dur.on{border-color:var(--blue);background:var(--blue-ll);}
+.dur-v{font-family:'Barlow',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
+.dur.on .dur-v{color:var(--blue);}
+.dur-l{font-size:10px;color:var(--text3);margin-top:1px;}
+
+/* ── COUNTER PAX ── */
+.pax-grid{padding:0 16px;display:flex;flex-direction:column;gap:8px;}
+.pax-row{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--bdr);border-radius:var(--r);padding:11px 14px;background:var(--white);}
+.pax-info{display:flex;flex-direction:column;}
+.pax-lbl{font-size:13px;font-weight:600;color:var(--text);}
+.pax-sub{font-size:11px;color:var(--text3);margin-top:1px;}
+.pax-ctrl{display:flex;align-items:center;gap:10px;}
+.pax-btn{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--bdr);background:var(--g1);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--blue);cursor:pointer;user-select:none;transition:background .15s;}
+.pax-btn:active{background:var(--blue-l);}
+.pax-v{font-family:'Barlow',sans-serif;font-size:17px;font-weight:700;color:var(--text);min-width:20px;text-align:center;}
+
+/* ── OPTS ── */
+.opt-list{padding:0 16px;display:flex;flex-direction:column;gap:7px;}
+.opt{display:flex;align-items:center;gap:10px;border:1.5px solid var(--bdr);border-radius:8px;padding:11px 12px;cursor:pointer;background:var(--white);transition:all .2s;}
+.opt.on{border-color:var(--blue);background:var(--blue-ll);}
+.opt-ico{width:32px;height:32px;border-radius:8px;background:var(--g1);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opt-ico svg{width:16px;height:16px;color:var(--text2);stroke-width:1.8;}
+.opt-n{font-size:12px;font-weight:600;color:var(--text);}
+.opt-d{font-size:11px;color:var(--text3);margin-top:1px;}
+.opt-p{font-family:'Barlow',sans-serif;font-size:13px;font-weight:700;color:var(--blue);flex-shrink:0;}
+.chk{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--g3);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0;transition:all .2s;}
+.opt.on .chk{background:var(--blue);border-color:var(--blue);}
+
+/* ── RECAP ── */
+.recap{margin:0 16px;border:1px solid var(--bdr);border-radius:var(--rl);overflow:hidden;}
+.r-head{background:var(--blue);padding:13px 16px;display:flex;gap:12px;align-items:center;}
+.r-thumb{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;}
+.r-thumb svg{width:22px;height:22px;color:#fff;stroke-width:1.8;}
+.r-name{font-family:'Barlow',sans-serif;font-size:15px;font-weight:700;color:#fff;}
+.r-sub2{font-size:11px;color:rgba(255,255,255,.55);margin-top:2px;}
+.rrow{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;border-bottom:1px solid var(--bdr);font-size:13px;}
+.rrow:last-child{border-bottom:none;}
+.rk{color:var(--text3);}
+.rv{font-weight:600;color:var(--text);}
+.rtot{padding:11px 16px;background:var(--blue-ll);display:flex;justify-content:space-between;align-items:center;border-top:2px solid var(--blue);}
+.rtot-l{font-family:'Barlow',sans-serif;font-size:14px;font-weight:700;color:var(--text);}
+.rtot-v{font-family:'Barlow',sans-serif;font-size:22px;font-weight:800;color:var(--blue);}
+
+/* ── PAYMENT ── */
+.pay-section{padding:0 16px;}
+.pay-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.pay-mlist{display:flex;flex-direction:column;gap:7px;margin-bottom:10px;}
+.pay-m{display:flex;align-items:center;gap:10px;border:1.5px solid var(--bdr);border-radius:8px;padding:12px;cursor:pointer;background:var(--white);transition:all .2s;}
+.pay-m.on{border-color:var(--blue);background:var(--blue-ll);}
+.pay-ico{width:40px;height:26px;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+.pi-ap{background:#1c1c1e;color:#fff;font-size:18px;}
+.pi-cb{background:var(--blue);color:#fff;font-size:10px;}
+.pi-vel{background:#0f3a1a;color:#4ade80;font-size:9px;font-weight:800;letter-spacing:.05em;}
+.pay-n{font-size:13px;font-weight:600;color:var(--text);}
+.pay-s{font-size:11px;color:var(--text3);margin-top:1px;}
+.radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--g3);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-left:auto;}
+.pay-m.on .radio{border-color:var(--blue);}
+.rd{width:9px;height:9px;border-radius:50%;background:var(--blue);opacity:0;transition:opacity .2s;}
+.pay-m.on .rd{opacity:1;}
+
+.cgv-row{display:flex;align-items:flex-start;gap:10px;padding:0;margin-bottom:12px;}
+.cgv-box{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--g3);flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;margin-top:1px;}
+.cgv-box.on{background:var(--blue);border-color:var(--blue);color:#fff;font-size:11px;}
+.cgv-txt{font-size:12px;color:var(--text2);line-height:1.5;}
+.cgv-lnk{color:var(--blue);font-weight:600;}
+
+/* ── INFO BOX ── */
+.ib{margin:0 16px;border-radius:8px;padding:9px 11px;display:flex;gap:7px;font-size:11px;line-height:1.5;}
+.ib-blue{background:var(--blue-ll);border:1px solid var(--blue-l);color:var(--blue-d);}
+
+/* API i button */
+.api-i{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--g3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--g4);cursor:pointer;transition:all .15s;font-style:italic;font-family:'Barlow',sans-serif;flex-shrink:0;}
+.api-i:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-ll);}
+
+/* ── SH ── */
+.sh{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);padding:13px 16px 8px;display:flex;align-items:center;gap:7px;}
+
+/* ── CONFIRMATION ── */
+.conf{flex:1;display:flex;flex-direction:column;align-items:center;padding:22px 20px 20px;}
+.conf-ico{width:68px;height:68px;border-radius:50%;border:2.5px solid var(--ok);background:var(--ok-bg);display:flex;align-items:center;justify-content:center;margin-bottom:14px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275) .1s both;}
+.conf-ico svg{width:30px;height:30px;color:var(--ok);stroke-width:2.5;}
+@keyframes pop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+.conf-t{font-family:'Barlow',sans-serif;font-size:20px;font-weight:800;color:var(--text);margin-bottom:5px;text-align:center;}
+.conf-s{font-size:12px;color:var(--text3);text-align:center;margin-bottom:20px;line-height:1.5;}
+.ticket{width:100%;border:1.5px solid var(--bdr);border-radius:var(--rl);overflow:hidden;}
+.tk-top{background:var(--blue);padding:16px;text-align:center;}
+.tk-ico{margin-bottom:4px;display:flex;justify-content:center;}
+.tk-ico svg{width:28px;height:28px;color:#fff;stroke-width:1.5;}
+.tk-n{font-family:'Barlow',sans-serif;font-size:17px;font-weight:800;color:#fff;}
+.tk-s{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;}
+.tk-sep{display:flex;align-items:center;}
+.tk-sep::before,.tk-sep::after{content:'';width:18px;height:18px;border-radius:50%;background:var(--g1);border:1px solid var(--bdr);flex-shrink:0;}
+.tk-line{flex:1;border-top:2px dashed var(--bdr);}
+.tk-body{padding:14px 16px;}
+.t-row{display:flex;justify-content:space-between;margin-bottom:8px;}
+.t-l{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);}
+.t-v{font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--text);}
+.qrb{width:94px;height:94px;background:#fff;border:1px solid var(--bdr);border-radius:8px;margin:6px auto;display:flex;align-items:center;justify-content:center;padding:5px;}
+.qrb svg{width:100%;height:100%;}
+.t-code{text-align:center;font-size:10px;letter-spacing:.15em;color:var(--text3);}
+
+/* ── BOTTOM BAR ── */
+.bbar{padding:10px 16px 18px;background:var(--white);border-top:1px solid var(--bdr);flex-shrink:0;}
+.cta{width:100%;padding:15px;border-radius:var(--r);border:none;background:var(--blue);color:#fff;font-family:'Barlow',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;box-shadow:0 4px 12px rgba(33,78,146,.2);}
+.cta:active{background:var(--blue-d);transform:scale(.98);}
+.cta.off{background:var(--g3);box-shadow:none;cursor:default;pointer-events:none;}
+.cta.grn{background:var(--ok);box-shadow:0 4px 12px rgba(21,105,62,.18);}
+.cta-note{text-align:center;font-size:11px;color:var(--text3);margin-top:7px;}
+
+.sp{flex:1;}
+.g{height:10px;}
+.glg{height:16px;}
+
+/* ── API MODAL ── */
+.api-overlay{position:absolute;inset:0;background:rgba(10,20,50,.44);z-index:200;display:none;align-items:flex-end;}
+.api-overlay.show{display:flex;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.api-sheet{width:100%;background:var(--white);border-radius:20px 20px 0 0;padding:16px;animation:slideUp .25s cubic-bezier(.4,0,.2,1);}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.api-handle{width:36px;height:4px;border-radius:2px;background:var(--g3);margin:0 auto 14px;}
+.api-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.api-who{font-family:'Barlow',sans-serif;font-size:16px;font-weight:800;color:var(--text);}
+.api-close{margin-left:auto;width:26px;height:26px;border-radius:50%;background:var(--g1);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text3);}
+.api-box{background:var(--g1);border:1px solid var(--bdr);border-radius:10px;padding:12px 14px;margin-bottom:10px;font-family:monospace;font-size:12px;}
+.api-meth{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.06em;padding:2px 8px;border-radius:5px;margin-bottom:7px;}
+.m-get{background:#e0f0e0;color:#1a6e1a;}
+.m-post{background:#e0eaff;color:#1a40a0;}
+.m-cb{background:#fff0e0;color:#9a4e00;}
+.api-url{color:var(--text2);word-break:break-all;line-height:1.5;}
+.api-desc{font-size:12px;color:var(--text2);line-height:1.6;}
+.src-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:8px;}
+.src-elib{background:var(--blue-l);color:var(--blue);}
+.src-kara{background:#f0ebff;color:#6030a8;}
+.src-meriq{background:#eafcff;color:#0a6070;}
+</style>
+</head>
+<body>
+
+<div class="hint">Application mobile — Orcières Merlette 1850</div>
+
+<div class="phone" id="phone">
+  <div class="notch"><div class="nb"></div><div class="nc"></div></div>
+  <div class="sb">
+    <div class="sb-t">9:41</div>
+    <div class="sb-i">
+      <svg width="15" height="11" viewBox="0 0 15 11" fill="#192038"><rect x="0" y="3" width="2.5" height="8" rx="1" opacity=".35"/><rect x="4" y="1.5" width="2.5" height="9.5" rx="1" opacity=".6"/><rect x="8" y="0" width="2.5" height="11" rx="1" opacity=".85"/><rect x="12" y="0" width="2.5" height="11" rx="1"/></svg>
+      <svg width="24" height="11" viewBox="0 0 24 11" fill="none"><rect x=".5" y=".5" width="20" height="10" rx="3" stroke="#192038" stroke-opacity=".25"/><rect x="1.5" y="1.5" width="17" height="8" rx="2" fill="#214E92"/><path d="M22 3.5v4c.8-.3 1.5-1.1 1.5-2s-.7-1.7-1.5-2z" fill="#192038" opacity=".25"/></svg>
+    </div>
+  </div>
+
+  <div class="screens">
+
+    <!-- ══════════════════════════════
+         ACCUEIL — redesign
+         ══════════════════════════════ -->
+    <div class="screen active" id="s0">
+      <!-- Header -->
+      <div class="home-header">
+        <div class="hh-greet">Bonjour</div>
+        <div class="hh-brand">Orcières Merlette</div>
+        <div class="hh-sub">Arena 1850 — Ouverture déc. 2026</div>
+        <div class="hh-title">Que souhaitez-vous<br>réserver ?</div>
+        <div class="cat-pills">
+          <div class="cpill" onclick="go(30)"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Forfaits ski</div>
+          <div class="cpill"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/><path d="M8 10h.01"/></svg> Arena 1850</div>
+          <div class="cpill"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg> Piscine</div>
+          <div class="cpill"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Patinoire</div>
+          <div class="cpill"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg> Rando</div>
+        </div>
+      </div>
+
+      <!-- Quick access strip -->
+      <div class="qa-strip">
+        <div class="qa2">
+          <div class="qa2-ico"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg></div>
+          <div class="qa2-lbl">Météo</div>
+        </div>
+        <div class="qa2">
+          <div class="qa2-ico"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></div>
+          <div class="qa2-lbl">Webcams</div>
+        </div>
+        <div class="qa2">
+          <div class="qa2-ico"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/><path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19"/></svg></div>
+          <div class="qa2-lbl">Pistes</div>
+        </div>
+        <div class="qa2">
+          <div class="qa2-ico"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg></div>
+          <div class="qa2-lbl">Mes pass</div>
+        </div>
+      </div>
+
+      <!-- Arena activities carousel -->
+      <div class="sec"><div class="sec-t">Arena 1850</div><div class="sec-l">Tout voir</div></div>
+      <div class="cards-row">
+        <div class="acard" onclick="go(1)">
+          <div class="ac-img img-kara"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m11 7.601-5.994 8.19a1 1 0 0 0 .1 1.298l.817.818a1 1 0 0 0 1.314.087L13.8 13"/><path d="m14.606 3.891-3.901 5.33a1 1 0 0 0 .093 1.283l3.674 3.674a1 1 0 0 0 1.347.025l4.432-3.848a1 1 0 0 0 .064-1.442l-4.267-4.96a1 1 0 0 0-1.442-.062Z"/><path d="m9.368 12.576-3.18 4.346"/></svg><div class="ac-new">Nouveau</div></div>
+          <div class="ac-body">
+            <div class="ac-name">Karaoke Box</div>
+            <div class="ac-meta">Sessions privées · 3 boxes</div>
+            <div class="ac-price">À partir de 18 € / pers.</div>
+            <button class="ac-btn" onclick="event.stopPropagation();go(1)">Réserver</button>
+          </div>
+        </div>
+        <div class="acard" onclick="go(10)">
+          <div class="ac-img img-bowl"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><div class="ac-new">Nouveau</div></div>
+          <div class="ac-body">
+            <div class="ac-name">Bowling</div>
+            <div class="ac-meta">6 pistes · Chaussures incluses</div>
+            <div class="ac-price">À partir de 11 € / pers.</div>
+            <button class="ac-btn" onclick="event.stopPropagation();go(10)">Réserver</button>
+          </div>
+        </div>
+        <div class="acard" onclick="go(20)">
+          <div class="ac-img img-padel"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 8A5.5 5.5 0 0 1 12 2.5"/><path d="M12 2.5A5.5 5.5 0 0 0 6.5 8"/><path d="M12 21.5V14"/><path d="M8.5 14h7"/><rect x="6" y="8" width="12" height="6" rx="2"/></svg><div class="ac-new">Nouveau</div></div>
+          <div class="ac-body">
+            <div class="ac-name">Padel</div>
+            <div class="ac-meta">2 courts · Raquettes incl.</div>
+            <div class="ac-price">Dès 14 € / pers.</div>
+            <button class="ac-btn" onclick="event.stopPropagation();go(20)">Réserver</button>
+          </div>
+        </div>
+        <div class="acard">
+          <div class="ac-img img-aqua"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18.5" cy="5.5" r="2.5"/><path d="M12 12c-2-3-6-3-7-1l-2 4"/><path d="m4.5 16.5 1-2.2"/><path d="M15 12c2-3 6-3 7-1l1.5 3"/><path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3"/><path d="M12 12v4"/></svg></div>
+          <div class="ac-body">
+            <div class="ac-name">Aquabiking</div>
+            <div class="ac-meta">Cours collectif · 10 pl.</div>
+            <div class="ac-price">15 € / séance</div>
+            <button class="ac-btn">Réserver</button>
+          </div>
+        </div>
+        <div class="acard">
+          <div class="ac-img img-spa"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-1.2 0-2.4.6-3 1.7A3.6 3.6 0 0 0 4.6 9c-1 .6-1.7 1.8-1.7 3s.7 2.4 1.7 3c-.3 1.2 0 2.5 1 3.4.8.8 2.1 1.2 3.3 1 .6 1 1.8 1.6 3 1.6s2.4-.6 3-1.7c1.2.3 2.5 0 3.4-1 .8-.8 1.2-2 1-3.3 1-.6 1.6-1.8 1.6-3s-.6-2.4-1.7-3c.3-1.2 0-2.5-1-3.4a3.7 3.7 0 0 0-3.3-1C14.4 3.6 13.2 3 12 3Z"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <div class="ac-body">
+            <div class="ac-name">Spa & Soins</div>
+            <div class="ac-meta">Massages sur RDV</div>
+            <div class="ac-price">Sur devis</div>
+            <button class="ac-btn">Réserver</button>
+          </div>
+        </div>
+        <div class="acard">
+          <div class="ac-img img-pisc"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg></div>
+          <div class="ac-body">
+            <div class="ac-name">Piscine</div>
+            <div class="ac-meta">Toboggan · 2 bassins</div>
+            <div class="ac-price">7 € / adulte</div>
+            <button class="ac-btn">Réserver</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forfait banner -->
+      <div class="sec"><div class="sec-t">Forfaits ski</div><div class="sec-l">Billetterie →</div></div>
+      <div class="forf-banner" onclick="go(30)">
+        <div class="fb-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/><path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19"/></svg></div>
+        <div style="flex:1;min-width:0;">
+          <div class="fb-t">1 jour Propuls'</div>
+          <div class="fb-s">Jusqu'à −25 % en achetant tôt</div>
+        </div>
+        <div class="fb-arr"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+      </div>
+
+      <div class="sp"></div>
+
+      <!-- Bottom nav — 4 items -->
+      <div class="bnav">
+        <div class="bn on">
+          <div class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <div class="bn-lbl">Accueil</div>
+        </div>
+        <div class="bn">
+          <div class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg></div>
+          <div class="bn-lbl">Réserver</div>
+        </div>
+        <div class="bn" onclick="go(40)">
+          <div class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg></div>
+          <div class="bn-lbl">Mes rés.</div>
+        </div>
+        <div class="bn">
+          <div class="bn-ico"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></div>
+          <div class="bn-lbl">Compte</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══ FORFAIT (s30) ══ -->
+    <div class="screen" id="s30">
+      <div class="navbar">
+        <div class="bk" onclick="go(0)"><i data-lucide="chevron-left" style="width:16px;height:16px;color:#fff;stroke-width:2;"></i></div>
+        <div class="nt">Acheter un forfait</div>
+        <a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a>
+      </div>
+      <div class="prog"><div class="pt"><div class="pf" style="width:33%"></div></div><div class="pm"><span>Étape 1/3</span><span class="ps">Type</span></div></div>
+      <div class="sh">Type de forfait</div>
+      <div class="sel-tabs">
+        <div class="sel-tab on" id="ft-ski" onclick="fSelType('ski',this)">Ski</div>
+        <div class="sel-tab" id="ft-pieton" onclick="fSelType('pieton',this)">Piéton</div>
+        <div class="sel-tab" id="ft-palais" onclick="fSelType('palais',this)">Palais</div>
+      </div>
+      <div class="sh">Durée</div>
+      <div class="card-list">
+        <div class="sc on" id="fd1" onclick="fSelDur(this,'1 jour','46')">
+          <div class="sc-ico"><i data-lucide="sun"></i></div>
+          <div class="sc-info"><div class="sc-n">1 jour Origine</div><div class="sc-m">Daté, non modifiable</div></div>
+          <div class="sc-p"><div class="sc-pv">46€</div><div class="sc-pu">/adulte</div></div>
+        </div>
+        <div class="sc" id="fd2" onclick="fSelDur(this,'1 jour','À partir de 34,50€')">
+          <div class="sc-ico"><i data-lucide="zap"></i></div>
+          <div class="sc-info"><div class="sc-n">1 jour Propuls'</div><div class="sc-m">Daté · jusqu'à −25 %</div><div class="sc-tags"><div class="sc-tag">Exclu web</div></div></div>
+          <div class="sc-p"><div class="sc-pv" style="font-size:13px;">−25%</div><div class="sc-bdg b-pop">Exclu web</div></div>
+        </div>
+        <div class="sc" id="fd3" onclick="fSelDur(this,'3h','40')">
+          <div class="sc-ico"><i data-lucide="timer"></i></div>
+          <div class="sc-info"><div class="sc-n">3 heures</div><div class="sc-m">Consécutives · non daté</div></div>
+          <div class="sc-p"><div class="sc-pv">40€</div><div class="sc-pu">/adulte</div></div>
+        </div>
+        <div class="sc" id="fd4" onclick="fSelDur(this,'6 jours','Voir tarifs')">
+          <div class="sc-ico"><i data-lucide="calendar-days"></i></div>
+          <div class="sc-info"><div class="sc-n">6 jours</div><div class="sc-m">Non consécutifs</div></div>
+          <div class="sc-p"><div class="sc-pv" style="font-size:13px;">Voir →</div></div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="sh">Participants</div>
+      <div class="pax-grid">
+        <div class="pax-row"><div class="pax-info"><div class="pax-lbl">Adulte</div><div class="pax-sub">18–64 ans</div></div><div class="pax-ctrl"><div class="pax-btn" onclick="fChg('fa',-1)">−</div><div class="pax-v" id="fpa">1</div><div class="pax-btn" onclick="fChg('fa',1)">+</div></div></div>
+        <div class="pax-row"><div class="pax-info"><div class="pax-lbl">Enfant</div><div class="pax-sub">5–17 ans</div></div><div class="pax-ctrl"><div class="pax-btn" onclick="fChg('fe',-1)">−</div><div class="pax-v" id="fpe">0</div><div class="pax-btn" onclick="fChg('fe',1)">+</div></div></div>
+        <div class="pax-row"><div class="pax-info"><div class="pax-lbl">Âge d'or</div><div class="pax-sub">65–74 ans</div></div><div class="pax-ctrl"><div class="pax-btn" onclick="fChg('fs',-1)">−</div><div class="pax-v" id="fps">0</div><div class="pax-btn" onclick="fChg('fs',1)">+</div></div></div>
+      </div>
+      <div class="sp"></div>
+      <div class="bbar"><button class="cta" onclick="go(31)">Choisir une date →</button><div class="cta-note">Récupération sur borne · NFC disponible</div></div>
+    </div>
+
+    <!-- S31: Date + paiement forfait -->
+    <div class="screen" id="s31">
+      <div class="navbar">
+        <div class="bk" onclick="go(30)"><i data-lucide="chevron-left" style="width:16px;height:16px;color:#fff;stroke-width:2;"></i></div>
+        <div class="nt">Récapitulatif & paiement</div>
+        <a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a>
+      </div>
+      <div class="prog"><div class="pt"><div class="pf" style="width:66%"></div></div><div class="pm"><span>Étape 2/3</span><span class="ps">Récap & Paiement</span></div></div>
+      <div class="sh">Date <div class="api-i" onclick="showApi('elib-dates')">i</div></div>
+      <div class="date-row">
+        <div class="dc dis"><div class="dc-d">Mar</div><div class="dc-n">23</div></div>
+        <div class="dc dis"><div class="dc-d">Mer</div><div class="dc-n">24</div></div>
+        <div class="dc on"><div class="dc-d">Jeu</div><div class="dc-n">25</div><div class="dc-dot"></div></div>
+        <div class="dc"><div class="dc-d">Ven</div><div class="dc-n">26</div><div class="dc-dot"></div></div>
+        <div class="dc"><div class="dc-d">Sam</div><div class="dc-n">27</div><div class="dc-dot"></div></div>
+        <div class="dc"><div class="dc-d">Dim</div><div class="dc-n">28</div></div>
+        <div class="dc"><div class="dc-d">Lun</div><div class="dc-n">29</div></div>
+      </div>
+      <div class="div"></div>
+      <div class="recap">
+        <div class="r-head"><div class="r-thumb"><i data-lucide="mountain-snow"></i></div><div><div class="r-name">1 jour Origine</div><div class="r-sub2">Orcières Merlette 1850</div></div></div>
+        <div class="rrow"><span class="rk">Date</span><span class="rv">Jeu. 25 mars 2026</span></div>
+        <div class="rrow"><span class="rk">1 adulte × 46 €</span><span class="rv">46 €</span></div>
+        <div class="rtot"><div class="rtot-l">Total TTC</div><div class="rtot-v">46 €</div></div>
+      </div>
+      <div class="div"></div>
+      <div class="pay-section">
+        <div class="pay-title">Paiement <div class="api-i" onclick="showApi('elib-payment')">i</div></div>
+        <div class="pay-mlist">
+          <div class="pay-m on" id="fpm1" onclick="selPay('f',this)"><div class="pay-ico pi-ap"></div><div class="pay-n">Apple Pay</div><div class="radio"><div class="rd"></div></div></div>
+          <div class="pay-m" id="fpm2" onclick="selPay('f',this)"><div class="pay-ico pi-cb">CB</div><div class="pay-n">Carte bancaire</div><div class="radio"><div class="rd"></div></div></div>
+          <div class="pay-m" id="fpm3" onclick="selPay('f',this)"><div class="pay-ico pi-vel">VEL</div><div class="pay-n">Solde VEL · 120 €</div><div class="radio"><div class="rd"></div></div></div>
+        </div>
+        <div class="cgv-row">
+          <div class="cgv-box" id="f-cgv" onclick="togCGV('f')"></div>
+          <div class="cgv-txt">J'accepte les <span class="cgv-lnk">conditions générales de vente</span> et la politique d'annulation d'Orcières Merlette 1850.</div>
+        </div>
+        <button class="cta off" id="f-pay-btn" onclick="go(32)">Payer 46 € →</button>
+      </div>
+      <div class="sp"></div><div style="height:20px;"></div>
+    </div>
+
+    <!-- S32: Confirmation forfait -->
+    <div class="screen" id="s32">
+      <div class="navbar"><div class="nt">Confirmation</div><a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a></div>
+      <div class="conf">
+        <div class="conf-ico"><i data-lucide="check"></i></div>
+        <div class="conf-t">Forfait confirmé !</div>
+        <div class="conf-s">Votre forfait est disponible.<br>Rechargez votre carte sur la borne ou via NFC.</div>
+        <div class="ticket">
+          <div class="tk-top"><div class="tk-ico"><i data-lucide="mountain-snow"></i></div><div class="tk-n">1 jour Origine</div><div class="tk-s">Jeu. 25 mars 2026 · 1 adulte</div></div>
+          <div class="tk-sep"><div class="tk-line"></div></div>
+          <div class="tk-body">
+            <div class="t-row"><div><div class="t-l">Total</div><div class="t-v">46 €</div></div><div style="text-align:right"><div class="t-l">Référence</div><div class="t-v">SKI-1850-2603</div></div></div>
+            <div class="qrb"><svg viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path fill="#000" d="M0 0h21v21H0z"/><path fill="#fff" d="M1 1h7v7H1zM13 1h7v7h-7zM1 13h7v7H1z"/><path fill="#000" d="M2 2h5v5H2zM14 2h5v5h-5zM2 14h5v5H2z"/><path fill="#fff" d="M3 3h3v3H3zM15 3h3v3h-3zM3 15h3v3H3z"/><path fill="#000" d="M4 4h1v1H4zM16 4h1v1h-1zM4 16h1v1H4zM9 1h2v2H9zM11 4h1v2h-1zM9 5h1v1H9zM9 7h3v1H9z"/></svg></div>
+            <div class="t-code">Scannez à la borne ou via NFC</div>
+          </div>
+        </div>
+      </div>
+      <div class="bbar"><button class="cta grn" onclick="go(0)">Retour à l'accueil</button><div class="cta-note">Ajouter à Apple Wallet</div></div>
+    </div>
+
+
+    <!-- ══════ KARAOKE TUNNEL ══════ -->
+    <div class="screen" id="s1">
+      <div class="navbar"><div class="bk" onclick="go(0)"><i data-lucide="chevron-left" style="width:16px;height:16px;color:#fff;stroke-width:2;"></i></div><div class="nt">Karaoke Box</div><a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a></div>
+      <div class="act-hero"><div class="ah-bg"></div><div class="ah-eyebrow">Arena 1850 · Loisirs</div><div class="ah-title">Karaoke Box</div><div class="ah-sub">Sessions privées · jusqu'à 15 personnes</div><div class="ah-ico"><i data-lucide="mic-vocal"></i></div></div>
+      <div class="infop">3 boxes privées, son HD, écran 4K, catalogue <strong>+80 000 titres</strong> FR/EN/ES. Sessions de 1h à 3h.</div>
+      <div class="incl"><div class="incl-row"><span class="ic-ok">✓</span>Box privatisée · catalogue Karafun illimité</div><div class="incl-row"><span class="ic-ok">✓</span>Carafe d'eau & jus inclus</div><div class="incl-row"><span class="ic-plus">+</span>Options boissons & plateaux</div></div>
+      <div class="sp"></div>
+      <div class="bbar"><button class="cta" onclick="go(2)">Choisir ma box →</button><div class="cta-note">Dès 18 € / pers. · Annulation gratuite</div></div>
+    </div>
+
+    <div class="screen" id="s2">
+      <div class="navbar"><div class="bk" onclick="go(1)"><i data-lucide="chevron-left" style="width:16px;height:16px;color:#fff;stroke-width:2;"></i></div><div class="nt">Choisir une box</div><a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a></div>
+      <div class="prog"><div class="pt"><div class="pf" style="width:25%"></div></div><div class="pm"><span>Étape 1/4</span><span class="ps">Box</span></div></div>
+      <div class="sh">3 boxes disponibles <div class="api-i" onclick="showApi('karafun-rooms')">i</div></div>
+      <div class="card-list">
+        <div class="sc" id="kb1" onclick="kSelBox(this,'Box Sauvage','18','2–6')"><div class="sc-ico"><i data-lucide="guitar"></i></div><div class="sc-info"><div class="sc-n">Box Sauvage</div><div class="sc-m">2–6 pers. · 25 m²</div><div class="sc-tags"><div class="sc-tag">Écran 65"</div><div class="sc-tag">800W</div></div></div><div class="sc-p"><div class="sc-pv">18€</div><div class="sc-pu">/pers.</div><div class="sc-bdg b-pop">Populaire</div></div></div>
+        <div class="sc" id="kb2" onclick="kSelBox(this,'Box Summit','22','6–12')"><div class="sc-ico"><i data-lucide="mountain"></i></div><div class="sc-info"><div class="sc-n">Box Summit</div><div class="sc-m">6–12 pers. · 40 m²</div><div class="sc-tags"><div class="sc-tag">Écran 85"</div><div class="sc-tag">Vue montagne</div></div></div><div class="sc-p"><div class="sc-pv">22€</div><div class="sc-pu">/pers.</div><div class="sc-bdg b-new">Nouveau</div></div></div>
+        <div class="sc" id="kb3" onclick="kSelBox(this,'Box VIP 1850','28','8–15')"><div class="sc-ico"><i data-lucide="star"></i></div><div class="sc-info"><div class="sc-n">Box VIP 1850</div><div class="sc-m">8–15 pers. · 60 m²</div><div class="sc-tags"><div class="sc-tag">Bar privé</div><div class="sc-tag">Scène</div></div></div><div class="sc-p"><div class="sc-pv">28€</div><div class="sc-pu">/pers.</div><div class="sc-bdg b-vip">VIP</div></div></div>
+      </div>
+      <div class="sp"></div>
+      <div class="bbar"><button class="cta off" id="k-cta2" onclick="go(3)">Choisir un créneau →</button><div class="cta-note">Sélectionnez une box pour continuer</div></div>
+    </div>
+
+    <div class="screen" id="s3">
+      <div class="navbar"><div class="bk" onclick="go(2)"><i data-lucide="chevron-left" style="width:16px;height:16px;color:#fff;stroke-width:2;"></i></div><div class="nt">Date & créneau</div><a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a></div>
+      <div class="prog"><div class="pt"><div class="pf" style="width:50%"></div></div><div class="pm"><span>Étape 2/4</span><span class="ps">Créneau</span></div></div>
+      <div class="sh">Date <div class="api-i" onclick="showApi('karafun-sessions')">i</div></div>
+      <div class="date-row">
+        <div class="dc dis"><div class="dc-d">Mar</div><div class="dc-n">23</div></div><div class="dc dis"><div class="dc-d">Mer</div><div class="dc-n">24</div></div>
+        <div class="dc on" id="kdc0" onclick="kSelDate(this,0)"><div class="dc-d">Jeu</div><div class="dc-n">25</div><div class="dc-dot"></div></div>
+        <div class="dc" id="kdc1" onclick="kSelDate(this,1)"><div class="dc-d">Ven</div><div class="dc-n">26</div><div class="dc-dot"></div></div>
+        <div class="dc" id="kdc2" onclick="kSelDate(this,2)"><div class="dc-d">Sam</div><div class="dc-n">27</div><div class="dc-dot"></div></div>
+        <div class="dc" id="kdc3" onclick="kSelDate(this,3)"><div class="dc-d">Dim</div><div class="dc-n">28</div></div>
+        <div class="dc" id="kdc4" onclick="kSelDate(this,4)"><div class="dc-d">Lun</div><div class="dc-n">29</div></div>
+      </div>
+      <div class="div"></div>
+      <div class="sh">Créneaux</div>
+      <div class="slots-grid">
+        <div class="slot full"><div class="sl-t">10h00</div><div class="sl-a">Complet</div></div>
+        <div class="slot" id="ksl1" onclick="kSelSlot(this,'11h00')"><div class="sl-t">11h00</div><div class="sl-a lo">2 restants</div></div>
+        <div class="slot full"><div class="sl-t">12h00</div><div class="sl-a">Complet</div></div>
+        <div class="slot" id="ksl2" onclick="kSelSlot(this,'14h00')"><div class="sl-t">14h00</div><div class="sl-a">Disponible</div></div>
+        <div class="slot" id="ksl3" onclick="kSelSlot(this,'15h30')"><div class="sl-t">15h30</div><div class="sl-a">Disponible</div></div>
+        <div class="slot" id="ksl4" onclick="kSelSlot(this,'17h00')"><div class="sl-t">17h00</div><div class="sl-a">Disponible</div></div>
+        <div class="slot" id="ksl5" onclick="kSelSlot(this,'18h30')"><div class="sl-t">18h30</div><div class="sl-a lo">1 restant</div></div>
+        <div class="slot" id="ksl6" onclick="kSelSlot(this,'20h00')"><div class="sl-t">20h00</div><div class="sl-a">Disponible</div></div>
+        <div class="slot" id="ksl7" onclick="kSelSlot(this,'21h30')"><div class="sl-t">21h30</div><div class="sl-a">Disponible</div></div>
+      </div>
+      <div class="div"></div>
+      <div class="sh">Durée & participants</div>
+      <div class="dur-row" style="margin-bottom:10px;">
+        <div class="dur on" id="kd1h" onclick="kSelDur(this,'1h','1 heure')"><div class="dur-v">1h</div><div class="dur-l">1 heure</div></div>
+        <div class="dur" id="kd2h" onclick="kSelDur(this,'2h','2 heures')"><div class="dur-v">2h</div><div class="dur-l">2 heures</div></div>
+        <div class="dur" id="kd3h" onclick="kSelDur(this,'3h','3 heures')"><div class="dur-v">3h</div><div class="dur-l">3 heures</div></div>
+      </div>
+      <div class="pax-grid">
+        <div class="pax-row"><div class="pax-info"><div class="pax-lbl">Adulte</div><div class="pax-sub" id="k-cap-hint">Box Sauvage · 2–6 pers.</div></div><div class="pax-ctrl"><div class="pax-btn" onclick="kChg(-1)">−</div><div class="pax-v" id="k-pax">4</div><div class="pax-btn" onclick="kChg(1)">+</div></div></div>
+      </div>
+      <div class="sp"></div>
+      <div class="bbar"><button class="cta off" id="k-cta3" onclick="go(4)">Récapitulatif →</button><div class="cta-note">Sélectionnez un créneau pour continuer</div></div>
+    </div>
+
+    <!-- S4: Récap + paiement karaoke -->
+    <div class="screen" id="s4">
+      <div class="navbar"><div class="bk" onclick="go(3)"><i data-lucide="chevron-left" style="width:16px;height:16px;color:#fff;stroke-width:2;"></i></div><div class="nt">Récapitulatif & paiement</div><a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a></div>
+      <div class="prog"><div class="pt"><div class="pf" style="width:75%"></div></div><div class="pm"><span>Étape 3/4</span><span class="ps">Paiement</span></div></div>
+      <div class="g"></div>
+      <div class="recap">
+        <div class="r-head"><div class="r-thumb"><i data-lucide="mic-vocal"></i></div><div><div class="r-name" id="kr-box">Box Sauvage</div><div class="r-sub2">Arena 1850 · Orcières</div></div></div>
+        <div class="rrow"><span class="rk">Date</span><span class="rv" id="kr-date">Jeu. 25 mars</span></div>
+        <div class="rrow"><span class="rk">Créneau</span><span class="rv" id="kr-slot">14h00</span></div>
+        <div class="rrow"><span class="rk">Durée</span><span class="rv" id="kr-dur">1 heure</span></div>
+        <div class="rrow"><span class="rk">Participants</span><span class="rv" id="kr-pax">4 pers.</span></div>
+        <div class="rtot"><div class="rtot-l">Total TTC</div><div class="rtot-v" id="kr-total">72 €</div></div>
+      </div>
+      <div class="sh">Options <div class="api-i" onclick="showApi('karafun-reserve')">i</div></div>
+      <div class="opt-list">
+        <div class="opt" id="kopt1" onclick="kTogOpt(this,90)"><div class="opt-ico"><i data-lucide="wine"></i></div><div><div class="opt-n">Champagne Moët 75cl</div><div class="opt-d">Livré en box</div></div><div class="opt-p">+90€</div><div class="chk">✓</div></div>
+        <div class="opt" id="kopt2" onclick="kTogOpt(this,35)"><div class="opt-ico"><i data-lucide="utensils-crossed"></i></div><div><div class="opt-n">Plateau apéritif</div><div class="opt-d">Charcuterie, fromages</div></div><div class="opt-p">+35€</div><div class="chk">✓</div></div>
+      </div>
+      <div class="div"></div>
+      <div class="pay-section">
+        <div class="pay-title">Paiement <div class="api-i" onclick="showApi('elib-payment')">i</div></div>
+        <div class="pay-mlist">
+          <div class="pay-m on" id="kpm1" onclick="selPay('k',this)"><div class="pay-ico pi-ap"></div><div class="pay-n">Apple Pay</div><div class="radio"><div class="rd"></div></div></div>
+          <div class="pay-m" id="kpm2" onclick="selPay('k',this)"><div class="pay-ico pi-cb">CB</div><div class="pay-n">Carte bancaire</div><div class="radio"><div class="rd"></div></div></div>
+          <div class="pay-m" id="kpm3" onclick="selPay('k',this)"><div class="pay-ico pi-vel">VEL</div><div class="pay-n">Solde VEL · 120 €</div><div class="radio"><div class="rd"></div></div></div>
+        </div>
+        <div class="cgv-row">
+          <div class="cgv-box" id="k-cgv" onclick="togCGV('k')"></div>
+          <div class="cgv-txt">J'accepte les <span class="cgv-lnk">CGV</span> et la politique d'annulation.</div>
+        </div>
+        <button class="cta off" id="k-pay-btn" onclick="go(5)">Payer <span id="k-pay-total">72 €</span> →</button>
+      </div>
+      <div class="sp"></div><div style="height:20px;"></div>
+    </div>
+
+    <div class="screen" id="s5">
+      <div class="navbar"><div class="nt">Confirmation</div><a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a></div>
+      <div class="sh">Session Karafun activée <div class="api-i" onclick="showApi('karafun-webhook')">i</div></div>
+      <div class="conf">
+        <div class="conf-ico"><i data-lucide="check"></i></div>
+        <div class="conf-t">Réservation confirmée !</div>
+        <div class="conf-s">Box réservée.<br>Présentez ce ticket à l'accueil Arena 1850.</div>
+        <div class="ticket">
+          <div class="tk-top"><div class="tk-ico"><i data-lucide="mic-vocal"></i></div><div class="tk-n" id="kt-box">Box Sauvage</div><div class="tk-s" id="kt-det">Jeu. 25 mars · 14h00 · 1h</div></div>
+          <div class="tk-sep"><div class="tk-line"></div></div>
+          <div class="tk-body"><div class="t-row"><div><div class="t-l">Participants</div><div class="t-v">4 pers.</div></div><div style="text-align:right"><div class="t-l">Total</div><div class="t-v" id="kt-total">72 €</div></div></div><div class="qrb"><svg viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path fill="#000" d="M0 0h21v21H0z"/><path fill="#fff" d="M1 1h7v7H1zM13 1h7v7h-7zM1 13h7v7H1z"/><path fill="#000" d="M2 2h5v5H2zM14 2h5v5h-5zM2 14h5v5H2z"/><path fill="#fff" d="M3 3h3v3H3zM15 3h3v3h-3zM3 15h3v3H3z"/><path fill="#000" d="M4 4h1v1H4zM16 4h1v1h-1zM4 16h1v1H4z"/></svg></div><div class="t-code">KAR-1850-2603-7742</div></div>
+        </div>
+      </div>
+      <div class="bbar"><button class="cta grn" onclick="go(0)">Retour à l'accueil</button><div class="cta-note">Ajouter à Apple Wallet</div></div>
+    </div>
+
+
+    <!-- ══════ BOWLING TUNNEL ══════ -->
+    <div class="screen" id="s10">
+      <div class="navbar"><div class="bk" onclick="go(0)"><i data-lucide="chevron-left" style="width:16px;height:16px;color:#fff;stroke-width:2;"></i></div><div class="nt">Bowling</div><a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a></div>
+      <div class="act-hero"><div class="ah-bg"></div><div class="ah-eyebrow">Arena 1850 · Loisirs</div><div class="ah-title">Bowling</div><div class="ah-sub">6 pistes Valcke · Chaussures incluses</div><div class="ah-ico"><i data-lucide="target"></i></div></div>
+      <div class="infop">6 pistes professionnelles, chaussures et scoreboard numérique inclus. Jusqu'à 6 joueurs par piste. Sessions de 1h ou 2h.</div>
+      <div class="incl"><div class="incl-row"><span class="ic-ok">✓</span>Piste privatisée · chaussures incluses</div><div class="incl-row"><span class="ic-ok">✓</span>Scoreboard numérique HD</div><div class="incl-row"><span class="ic-plus">+</span>Options boissons & snacks</div></div>
+      <div class="sp"></div>
+      <div class="bbar"><button class="cta" onclick="go(11)">Choisir une piste →</button><div class="cta-note">Dès 11 € / pers. · Chaussures incluses</div></div>
+    </div>
+
+    <div class="screen" id="s11">
+      <div class="navbar"><div class="bk" onclick="go(10)"><i data-lucide="chevron-left" style="width:16px;height:16px;color:#fff;stroke-width:2;"></i></div><div class="nt">Choisir une piste</div><a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a></div>
+      <div class="prog"><div class="pt"><div class="pf" style="width:25%"></div></div><div class="pm"><span>Étape 1/3</span><span class="ps">Piste</span></div></div>
+      <div class="sh">Pistes disponibles <div class="api-i" onclick="showApi('meriq-lanes')">i</div></div>
+      <div class="card-list">
+        <div class="sc" id="bb1" onclick="bSelLane(this,'Pistes 1–2','11','2–4')"><div class="sc-ico"><i data-lucide="target"></i></div><div class="sc-info"><div class="sc-n">Pistes 1–2</div><div class="sc-m">2–4 joueurs · Vue montagne</div><div class="sc-tags"><div class="sc-tag">Bumpers</div><div class="sc-tag">Scoreboard HD</div></div></div><div class="sc-p"><div class="sc-pv">11€</div><div class="sc-pu">/pers.</div><div class="sc-bdg b-pop">Populaire</div></div></div>
+        <div class="sc" id="bb2" onclick="bSelLane(this,'Pistes 3–4','11','2–6')"><div class="sc-ico"><i data-lucide="trophy"></i></div><div class="sc-info"><div class="sc-n">Pistes 3–4</div><div class="sc-m">2–6 joueurs · Zone centrale</div><div class="sc-tags"><div class="sc-tag">Ambiance</div></div></div><div class="sc-p"><div class="sc-pv">11€</div><div class="sc-pu">/pers.</div></div></div>
+        <div class="sc" id="bb3" onclick="bSelLane(this,'Piste VIP 5–6','16','2–6')"><div class="sc-ico"><i data-lucide="star"></i></div><div class="sc-info"><div class="sc-n">Piste VIP 5–6</div><div class="sc-m">2–6 joueurs · Zone VIP</div><div class="sc-tags"><div class="sc-tag">Canapés</div><div class="sc-tag">Service table</div></div></div><div class="sc-p"><div class="sc-pv">16€</div><div class="sc-pu">/pers.</div><div class="sc-bdg b-vip">VIP</div></div></div>
+      </div>
+      <div class="sp"></div>
+      <div class="bbar"><button class="cta off" id="b-cta1" onclick="go(12)">Choisir un créneau →</button></div>
+    </div>
+
+    <!-- S12: créneau + recap + paiement bowling -->
+    <div class="screen" id="s12">
+      <div class="navbar"><div class="bk" onclick="go(11)"><i data-lucide="chevron-left" style="width:16px;height:16px;color:#fff;stroke-width:2;"></i></div><div class="nt">Créneau & paiement</div><a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a></div>
+      <div class="prog"><div class="pt"><div class="pf" style="width:66%"></div></div><div class="pm"><span>Étape 2/3</span><span class="ps">Créneau & paiement</span></div></div>
+      <div class="sh">Date <div class="api-i" onclick="showApi('meriq-slots')">i</div></div>
+      <div class="date-row">
+        <div class="dc dis"><div class="dc-d">Mar</div><div class="dc-n">23</div></div><div class="dc dis"><div class="dc-d">Mer</div><div class="dc-n">24</div></div>
+        <div class="dc on" id="bdc0" onclick="bSelDate(this,0)"><div class="dc-d">Jeu</div><div class="dc-n">25</div><div class="dc-dot"></div></div>
+        <div class="dc" id="bdc1" onclick="bSelDate(this,1)"><div class="dc-d">Ven</div><div class="dc-n">26</div><div class="dc-dot"></div></div>
+        <div class="dc" id="bdc2" onclick="bSelDate(this,2)"><div class="dc-d">Sam</div><div class="dc-n">27</div><div class="dc-dot"></div></div>
+        <div class="dc" id="bdc3" onclick="bSelDate(this,3)"><div class="dc-d">Dim</div><div class="dc-n">28</div></div>
+        <div class="dc" id="bdc4" onclick="bSelDate(this,4)"><div class="dc-d">Lun</div><div class="dc-n">29</div></div>
+      </div>
+      <div class="div"></div>
+      <div class="sh">Créneaux</div>
+      <div class="slots-grid">
+        <div class="slot" id="bsl1" onclick="bSelSlot(this,'10h00')"><div class="sl-t">10h00</div><div class="sl-a">Disponible</div></div>
+        <div class="slot full"><div class="sl-t">11h00</div><div class="sl-a">Complet</div></div>
+        <div class="slot" id="bsl2" onclick="bSelSlot(this,'12h00')"><div class="sl-t">12h00</div><div class="sl-a lo">1 restant</div></div>
+        <div class="slot full"><div class="sl-t">13h00</div><div class="sl-a">Complet</div></div>
+        <div class="slot" id="bsl3" onclick="bSelSlot(this,'14h00')"><div class="sl-t">14h00</div><div class="sl-a">Disponible</div></div>
+        <div class="slot" id="bsl4" onclick="bSelSlot(this,'15h00')"><div class="sl-t">15h00</div><div class="sl-a">Disponible</div></div>
+        <div class="slot full"><div class="sl-t">16h00</div><div class="sl-a">Complet</div></div>
+        <div class="slot" id="bsl5" onclick="bSelSlot(this,'17h00')"><div class="sl-t">17h00</div><div class="sl-a lo">2 restants</div></div>
+        <div class="slot" id="bsl6" onclick="bSelSlot(this,'18h00')"><div class="sl-t">18h00</div><div class="sl-a">Disponible</div></div>
+      </div>
+      <div class="div"></div>
+      <div class="sh">Durée & joueurs</div>
+      <div class="dur-row" style="margin-bottom:10px;">
+        <div class="dur on" id="bd1h" onclick="bSelDur(this,'1h','1 heure')"><div class="dur-v">1h</div><div class="dur-l">1 heure</div></div>
+        <div class="dur" id="bd2h" onclick="bSelDur(this,'2h','2 heures')"><div class="dur-v">2h</div><div class="dur-l">2 heures</div></div>
+      </div>
+      <div class="pax-grid">
+        <div class="pax-row"><div class="pax-info"><div class="pax-lbl">Adulte</div><div class="pax-sub" id="b-cap">Pistes 1–2 · 2–4 joueurs</div></div><div class="pax-ctrl"><div class="pax-btn" onclick="bChg('ba',-1)">−</div><div class="pax-v" id="bpa">2</div><div class="pax-btn" onclick="bChg('ba',1)">+</div></div></div>
+        <div class="pax-row"><div class="pax-info"><div class="pax-lbl">Enfant</div><div class="pax-sub">5–17 ans</div></div><div class="pax-ctrl"><div class="pax-btn" onclick="bChg('be',-1)">−</div><div class="pax-v" id="bpe">1</div><div class="pax-btn" onclick="bChg('be',1)">+</div></div></div>
+      </div>
+      <div class="div"></div>
+      <div class="recap" id="b-recap" style="display:none">
+        <div class="r-head"><div class="r-thumb"><i data-lucide="target"></i></div><div><div class="r-name" id="br-lane">Pistes 1–2</div><div class="r-sub2">Arena 1850 · Orcières</div></div></div>
+        <div class="rrow"><span class="rk">Date & Créneau</span><span class="rv" id="br-slot2">—</span></div>
+        <div class="rrow"><span class="rk">Joueurs</span><span class="rv" id="br-pax">—</span></div>
+        <div class="rtot"><div class="rtot-l">Total TTC</div><div class="rtot-v" id="br-total">—</div></div>
+      </div>
+      <div class="div" id="b-div2" style="display:none"></div>
+      <div class="pay-section" id="b-pay-section" style="display:none">
+        <div class="pay-title">Paiement <div class="api-i" onclick="showApi('elib-payment')">i</div></div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:8px;display:flex;align-items:center;gap:5px;">Piste bloquée dans Meriq après confirmation <div class="api-i" onclick="showApi('meriq-reserve')">i</div></div>
+        <div class="pay-mlist">
+          <div class="pay-m on" id="bpm1" onclick="selPay('b',this)"><div class="pay-ico pi-ap"></div><div class="pay-n">Apple Pay</div><div class="radio"><div class="rd"></div></div></div>
+          <div class="pay-m" id="bpm2" onclick="selPay('b',this)"><div class="pay-ico pi-cb">CB</div><div class="pay-n">Carte bancaire</div><div class="radio"><div class="rd"></div></div></div>
+          <div class="pay-m" id="bpm3" onclick="selPay('b',this)"><div class="pay-ico pi-vel">VEL</div><div class="pay-n">Solde VEL · 120 €</div><div class="radio"><div class="rd"></div></div></div>
+        </div>
+        <div class="cgv-row">
+          <div class="cgv-box" id="b-cgv" onclick="togCGV('b')"></div>
+          <div class="cgv-txt">J'accepte les <span class="cgv-lnk">CGV</span> et la politique d'annulation.</div>
+        </div>
+        <button class="cta off" id="b-pay-btn" onclick="go(13)">Payer <span id="b-pay-total">—</span> →</button>
+      </div>
+      <div class="sp"></div><div style="height:20px;"></div>
+    </div>
+
+    <div class="screen" id="s13">
+      <div class="navbar"><div class="nt">Confirmation</div><a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a></div>
+      <div class="sh">Piste confirmée dans Meriq <div class="api-i" onclick="showApi('meriq-webhook')">i</div></div>
+      <div class="conf">
+        <div class="conf-ico"><i data-lucide="check"></i></div>
+        <div class="conf-t">Réservation confirmée !</div>
+        <div class="conf-s">Piste réservée.<br>Présentez ce ticket à l'accueil Arena 1850.</div>
+        <div class="ticket">
+          <div class="tk-top"><div class="tk-ico"><i data-lucide="target"></i></div><div class="tk-n" id="bt-lane">Pistes 1–2</div><div class="tk-s" id="bt-det">Jeu. 25 mars · 14h00 · 1h</div></div>
+          <div class="tk-sep"><div class="tk-line"></div></div>
+          <div class="tk-body"><div class="t-row"><div><div class="t-l">Joueurs</div><div class="t-v" id="bt-pax">3 joueurs</div></div><div style="text-align:right"><div class="t-l">Total</div><div class="t-v" id="bt-total">33 €</div></div></div><div class="qrb"><svg viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path fill="#000" d="M0 0h21v21H0z"/><path fill="#fff" d="M1 1h7v7H1zM13 1h7v7h-7zM1 13h7v7H1z"/><path fill="#000" d="M2 2h5v5H2zM14 2h5v5h-5zM2 14h5v5H2z"/><path fill="#fff" d="M3 3h3v3H3zM15 3h3v3h-3zM3 15h3v3H3z"/><path fill="#000" d="M4 4h1v1H4zM16 4h1v1h-1zM4 16h1v1H4z"/></svg></div><div class="t-code">BWL-1850-2603-5518</div></div>
+        </div>
+      </div>
+      <div class="bbar"><button class="cta grn" onclick="go(0)">Retour à l'accueil</button><div class="cta-note">Ajouter à Apple Wallet</div></div>
+    </div>
+
+    <!-- ══ PADEL (s20) ══ -->
+    <div class="screen" id="s20">
+      <div class="navbar"><div class="bk" onclick="go(0)"><i data-lucide="chevron-left" style="width:16px;height:16px;color:#fff;stroke-width:2;"></i></div><div class="nt">Padel</div><a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a></div>
+      <div class="act-hero"><div class="ah-bg"></div><div class="ah-eyebrow">Arena 1850 · Loisirs</div><div class="ah-title">Padel</div><div class="ah-sub">2 courts · Raquettes incluses</div><div class="ah-ico"><i data-lucide="swords"></i></div></div>
+      <div class="infop">2 courts de padel indoor à 1850 m d'altitude. Raquettes et balles incluses. Réservation par créneau d'1h ou 1h30, de 2 à 4 joueurs.</div>
+      <div class="incl"><div class="incl-row"><span class="ic-ok">✓</span>Court privatisé · raquettes & balles incluses</div><div class="incl-row"><span class="ic-ok">✓</span>Vestiaires disponibles</div></div>
+      <div class="g"></div><div class="sh">Créneaux disponibles <div class="api-i" onclick="showApi('elib-dates')">i</div></div>
+      <div class="date-row">
+        <div class="dc dis"><div class="dc-d">Mar</div><div class="dc-n">23</div></div><div class="dc dis"><div class="dc-d">Mer</div><div class="dc-n">24</div></div>
+        <div class="dc on"><div class="dc-d">Jeu</div><div class="dc-n">25</div><div class="dc-dot"></div></div>
+        <div class="dc"><div class="dc-d">Ven</div><div class="dc-n">26</div><div class="dc-dot"></div></div>
+        <div class="dc"><div class="dc-d">Sam</div><div class="dc-n">27</div><div class="dc-dot"></div></div>
+      </div>
+      <div class="div"></div>
+      <div class="slots-grid">
+        <div class="slot full"><div class="sl-t">09h00</div><div class="sl-a">Complet</div></div>
+        <div class="slot"><div class="sl-t">10h30</div><div class="sl-a">Disponible</div></div>
+        <div class="slot"><div class="sl-t">12h00</div><div class="sl-a">Disponible</div></div>
+        <div class="slot"><div class="sl-t">14h00</div><div class="sl-a lo">1 restant</div></div>
+        <div class="slot full"><div class="sl-t">15h30</div><div class="sl-a">Complet</div></div>
+        <div class="slot"><div class="sl-t">17h00</div><div class="sl-a">Disponible</div></div>
+      </div>
+      <div class="sp"></div>
+      <div class="bbar"><button class="cta" onclick="go(0)">Bientôt disponible</button><div class="cta-note">Tunnel complet en cours de développement</div></div>
+    </div>
+
+    <!-- ══ AGENDA (s40) ══ -->
+    <div class="screen" id="s40">
+      <div class="navbar"><div class="bk" onclick="go(0)"><i data-lucide="chevron-left" style="width:16px;height:16px;color:#fff;stroke-width:2;"></i></div><div class="nt">Agenda</div><a class="logo-link" onclick="go(0)"><div class="lm">Orcières</div><div class="ls">1850 m</div></a></div>
+      <div style="padding:12px 16px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--bdr);">
+        <div style="flex-shrink:0;padding:6px 14px;border-radius:20px;background:var(--blue);color:#fff;font-size:12px;font-weight:600;">Tout</div>
+        <div style="flex-shrink:0;padding:6px 14px;border-radius:20px;border:1px solid var(--bdr);color:var(--text3);font-size:12px;font-weight:600;">Sport</div>
+        <div style="flex-shrink:0;padding:6px 14px;border-radius:20px;border:1px solid var(--bdr);color:var(--text3);font-size:12px;font-weight:600;">Concerts</div>
+        <div style="flex-shrink:0;padding:6px 14px;border-radius:20px;border:1px solid var(--bdr);color:var(--text3);font-size:12px;font-weight:600;">Famille</div>
+        <div style="flex-shrink:0;padding:6px 14px;border-radius:20px;border:1px solid var(--bdr);color:var(--text3);font-size:12px;font-weight:600;">Gratuit</div>
+      </div>
+      <div class="agenda-list" style="padding-top:12px;">
+        <div class="ag-item"><div class="ag-date"><div class="ag-d">25</div><div class="ag-m">Mars</div></div><div class="ag-info"><div class="ag-t">Hockey sur glace — Rapaces vs Wasquehal</div><div class="ag-s">17h30 · Patinoire Arena 1850</div></div><div class="ag-tag tg-paid">12 €</div></div>
+        <div class="ag-item"><div class="ag-date"><div class="ag-d">27</div><div class="ag-m">Mars</div></div><div class="ag-info"><div class="ag-t">12h SnowParty Rocherousse</div><div class="ag-s">Plateau 2280 m · Entrée libre</div></div><div class="ag-tag tg-free">Gratuit</div></div>
+        <div class="ag-item"><div class="ag-date"><div class="ag-d">28</div><div class="ag-m">Mars</div></div><div class="ag-info"><div class="ag-t">14h Spectacle de magie</div><div class="ag-s">Rocherousse · Families</div></div><div class="ag-tag tg-free">Gratuit</div></div>
+        <div class="ag-item"><div class="ag-date"><div class="ag-d">29</div><div class="ag-m">Mars</div></div><div class="ag-info"><div class="ag-t">19h Concert de Synapson</div><div class="ag-s">Front de Neige</div></div><div class="ag-tag tg-free">Gratuit</div></div>
+        <div class="ag-item"><div class="ag-date"><div class="ag-d">1</div><div class="ag-m">Avr.</div></div><div class="ag-info"><div class="ag-t">Soirée Afterski Arena 1850</div><div class="ag-s">20h30 · Karaoke Box & Bar</div></div><div class="ag-tag tg-paid">Sur rés.</div></div>
+      </div>
+      <div class="sp"></div>
+      <div class="bnav">
+        <div class="bn" onclick="go(0)"><div class="bn-ico"><i data-lucide="house"></i></div><div class="bn-lbl">Accueil</div></div>
+        <div class="bn"><div class="bn-ico"><i data-lucide="calendar-range"></i></div><div class="bn-lbl">Réserver</div></div>
+        <div class="bn on"><div class="bn-ico"><i data-lucide="notebook-text"></i></div><div class="bn-lbl" style="color:var(--blue)">Mes rés.</div></div>
+        <div class="bn"><div class="bn-ico"><i data-lucide="user"></i></div><div class="bn-lbl">Compte</div></div>
+      </div>
+    </div>
+
+  </div><!-- /screens -->
+
+  <!-- API OVERLAY -->
+  <div class="api-overlay" id="apiOverlay" onclick="closeApi(event)">
+    <div class="api-sheet">
+      <div class="api-handle"></div>
+      <div class="api-head">
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:3px;">Appel API</div><div class="api-who" id="api-who">—</div></div>
+        <button class="api-close" onclick="closeApiNow()">✕</button>
+      </div>
+      <div id="api-src"></div>
+      <div class="api-box"><div class="api-meth" id="api-meth">GET</div><div class="api-url" id="api-url">—</div></div>
+      <div class="api-desc" id="api-desc">—</div>
+    </div>
+  </div>
+
+</div><!-- /phone -->
+
+<script>
+// Init Lucide icons
+document.addEventListener('DOMContentLoaded', () => {
+  if(typeof lucide !== 'undefined') lucide.createIcons();
+});
+
+const DATES=['Jeu. 25 mars','Ven. 26 mars','Sam. 27 mars','Dim. 28 mars','Lun. 29 mars'];
+
+/* ── NAV ── */
+let cur=0;
+function go(n){
+  const c=document.getElementById('s'+cur);
+  c.classList.remove('active');c.classList.add('exit');
+  setTimeout(()=>c.classList.remove('exit'),320);
+  cur=n;
+  const nx=document.getElementById('s'+n);
+  if(!nx)return;
+  nx.classList.add('active');nx.scrollTop=0;
+  if(n===4)kBuildRecap();
+  if(n===5)kBuildTicket();
+  if(n===13)bBuildTicket();
+  // Re-init Lucide icons for new screen
+  setTimeout(()=>{if(typeof lucide!=='undefined')lucide.createIcons();},50);
+}
+
+/* ── API MODAL ── */
+const APIS={
+  'karafun-rooms':{who:'API Karafun',src:'kara',srcLbl:'Karafun / Karaoke',meth:'GET',mc:'m-get',url:'GET /api/rooms/availability',desc:"Récupère les boxes disponibles avec capacité, tarif et équipements. Appelé au chargement de l'écran."},
+  'karafun-sessions':{who:'API Karafun',src:'kara',srcLbl:'Karafun / Karaoke',meth:'GET',mc:'m-get',url:'GET /api/sessions?room={id}&date={date}',desc:'Renvoie les créneaux horaires pour une box et une date. Mis à jour à chaque changement.'},
+  'karafun-reserve':{who:'API Karafun',src:'kara',srcLbl:'Karafun / Karaoke',meth:'POST',mc:'m-post',url:'POST /api/sessions/reserve',desc:'Crée la réservation après paiement. La session démarre automatiquement — le client entre directement dans sa box.'},
+  'karafun-webhook':{who:'Karafun → eLibertyFR',src:'kara',srcLbl:'Callback Karafun',meth:'CALLBACK',mc:'m-cb',url:'POST /webhook/karafun/session-created',desc:'Karafun notifie eLibertyFR. Le ticket QR est généré et envoyé par email + Apple Wallet.'},
+  'meriq-lanes':{who:'API Meriq / Valcke',src:'meriq',srcLbl:'Meriq / Bowling',meth:'GET',mc:'m-get',url:'GET /lanes/available',desc:'Pistes disponibles avec capacité et équipements. Piloté par Valcke via Meriq.'},
+  'meriq-slots':{who:'API Meriq / Valcke',src:'meriq',srcLbl:'Meriq / Bowling',meth:'GET',mc:'m-get',url:'GET /timeslots?lane={id}&date={date}',desc:'Créneaux disponibles pour une piste et une date. Temps réel depuis Meriq.'},
+  'meriq-reserve':{who:'API Meriq / Valcke',src:'meriq',srcLbl:'Meriq / Bowling',meth:'POST',mc:'m-post',url:'POST /reservations',desc:'Bloque la piste dans Meriq après paiement eLibertyFR. Indisponible immédiatement pour les autres.'},
+  'meriq-webhook':{who:'Meriq → eLibertyFR',src:'meriq',srcLbl:'Callback Meriq',meth:'CALLBACK',mc:'m-cb',url:'POST /webhook/meriq/lane-confirmed',desc:'Meriq confirme la piste. Ticket généré, scoreboard pré-configuré pour le créneau.'},
+  'elib-payment':{who:'eLibertyFR',src:'elib',srcLbl:'eLibertyFR (natif)',meth:'POST',mc:'m-post',url:'POST /payment/process',desc:'Paiement traité nativement. Apple Pay Express Checkout, CB, VEL — aucune redirection.'},
+  'elib-dates':{who:'eLibertyFR',src:'elib',srcLbl:'eLibertyFR (natif)',meth:'GET',mc:'m-get',url:'GET /produit/{id}/disponibilites',desc:'Disponibilités et dates réservables, gérées nativement par eLibertyFR.'},
+};
+const SRCC={elib:{bg:'#e8eef8',c:'#214E92'},kara:{bg:'#f0ebff',c:'#6030a8'},meriq:{bg:'#eafcff',c:'#0a6070'}};
+function showApi(k){
+  const d=APIS[k];if(!d)return;
+  document.getElementById('api-who').textContent=d.who;
+  const mb=document.getElementById('api-meth');mb.textContent=d.meth;mb.className='api-meth '+d.mc;
+  document.getElementById('api-url').textContent=d.url;
+  document.getElementById('api-desc').textContent=d.desc;
+  const c=SRCC[d.src]||SRCC.elib;
+  document.getElementById('api-src').innerHTML='<div class="src-badge" style="background:'+c.bg+';color:'+c.c+';">'+d.srcLbl+'</div>';
+  document.getElementById('apiOverlay').classList.add('show');
+}
+function closeApi(e){if(e.target===document.getElementById('apiOverlay'))closeApiNow();}
+function closeApiNow(){document.getElementById('apiOverlay').classList.remove('show');}
+
+/* ── FORFAIT ── */
+let fpa=1,fpe=0,fps=0,fDurLbl='1 jour',fDurPrice=46;
+function fSelType(t,el){document.querySelectorAll('#s30 .sel-tab').forEach(x=>x.classList.remove('on'));el.classList.add('on');}
+function fSelDur(el,lbl,price){document.querySelectorAll('#s30 .sc').forEach(x=>x.classList.remove('on'));el.classList.add('on');fDurLbl=lbl;fDurPrice=parseInt(price)||46;}
+function fChg(id,d){
+  if(id==='fa'){fpa=Math.max(0,fpa+d);document.getElementById('fpa').textContent=fpa;}
+  if(id==='fe'){fpe=Math.max(0,fpe+d);document.getElementById('fpe').textContent=fpe;}
+  if(id==='fs'){fps=Math.max(0,fps+d);document.getElementById('fps').textContent=fps;}
+}
+let fCGV=false;
+function togCGV(pfx){
+  if(pfx==='f'){fCGV=!fCGV;document.getElementById('f-cgv').classList.toggle('on',fCGV);document.getElementById('f-cgv').textContent=fCGV?'✓':'';fUpdBtn();}
+  if(pfx==='k'){kCGV=!kCGV;document.getElementById('k-cgv').classList.toggle('on',kCGV);document.getElementById('k-cgv').textContent=kCGV?'✓':'';kUpdBtn();}
+  if(pfx==='b'){bCGV=!bCGV;document.getElementById('b-cgv').classList.toggle('on',bCGV);document.getElementById('b-cgv').textContent=bCGV?'✓':'';bUpdBtn();}
+}
+function selPay(pfx,el){
+  document.querySelectorAll('#s31 .pay-m,#s4 .pay-m,#s12 .pay-m').forEach(p=>{if(el.closest('#s31')&&p.closest('#s31'))p.classList.remove('on');if(el.closest('#s4')&&p.closest('#s4'))p.classList.remove('on');if(el.closest('#s12')&&p.closest('#s12'))p.classList.remove('on');});
+  el.classList.add('on');
+}
+function fUpdBtn(){document.getElementById('f-pay-btn').classList.toggle('off',!fCGV);}
+
+/* ── KARAOKE ── */
+let kBox='Box Sauvage',kPrice=18,kCap='2–6',kSlot='',kDur='1h',kDurLbl='1 heure',kDateIdx=0,kPax=4,kExtras=0,kCGV=false;
+function kSelBox(el,name,price,cap){
+  document.querySelectorAll('#s2 .sc').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');kBox=name;kPrice=parseInt(price);kCap=cap;
+  document.getElementById('k-cap-hint').textContent=name+' · '+cap+' pers.';
+  document.getElementById('k-cta2').classList.remove('off');
+}
+function kSelDate(el,idx){document.querySelectorAll('#s3 .dc:not(.dis)').forEach(c=>c.classList.remove('on'));el.classList.add('on');kDateIdx=idx;}
+function kSelSlot(el,t){document.querySelectorAll('#s3 .slot:not(.full)').forEach(s=>s.classList.remove('on'));el.classList.add('on');kSlot=t;document.getElementById('k-cta3').classList.remove('off');}
+function kSelDur(el,v,l){document.querySelectorAll('#s3 .dur').forEach(d=>d.classList.remove('on'));el.classList.add('on');kDur=v;kDurLbl=l;}
+function kChg(d){kPax=Math.max(1,Math.min(15,kPax+d));document.getElementById('k-pax').textContent=kPax;}
+function kTogOpt(el,p){el.classList.toggle('on');kExtras+=el.classList.contains('on')?p:-p;const t=kPrice*kPax+kExtras;document.getElementById('k-pay-total').textContent=t+' €';document.getElementById('kr-total').textContent=t+' €';}
+function kUpdBtn(){const t=kPrice*kPax+kExtras;document.getElementById('k-pay-total').textContent=t+' €';document.getElementById('k-pay-btn').classList.toggle('off',!kCGV);}
+function kBuildRecap(){
+  const t=kPrice*kPax+kExtras;
+  document.getElementById('kr-box').textContent=kBox;
+  document.getElementById('kr-date').textContent=DATES[kDateIdx]||DATES[0];
+  document.getElementById('kr-slot').textContent=kSlot||'14h00';
+  document.getElementById('kr-dur').textContent=kDurLbl;
+  document.getElementById('kr-pax').textContent=kPax+' pers.';
+  document.getElementById('kr-total').textContent=t+' €';
+  document.getElementById('k-pay-total').textContent=t+' €';
+}
+function kBuildTicket(){
+  const t=kPrice*kPax+kExtras;
+  document.getElementById('kt-box').textContent=kBox;
+  document.getElementById('kt-det').textContent=(DATES[kDateIdx]||DATES[0])+' · '+(kSlot||'14h00')+' · '+kDur;
+  document.getElementById('kt-total').textContent=t+' €';
+}
+
+/* ── BOWLING ── */
+let bLane='Pistes 1–2',bPrice=11,bCap='2–4',bSlot='',bDur='1h',bDurLbl='1 heure',bDateIdx=0,bAdult=2,bChild=1,bCGV=false;
+function bSelLane(el,name,price,cap){
+  document.querySelectorAll('#s11 .sc').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');bLane=name;bPrice=parseInt(price);bCap=cap;
+  document.getElementById('b-cap').textContent=name+' · '+cap+' joueurs';
+  document.getElementById('b-cta1').classList.remove('off');
+}
+function bSelDate(el,idx){document.querySelectorAll('#s12 .dc:not(.dis)').forEach(c=>c.classList.remove('on'));el.classList.add('on');bDateIdx=idx;bRefresh();}
+function bSelSlot(el,t){document.querySelectorAll('#s12 .slot:not(.full)').forEach(s=>s.classList.remove('on'));el.classList.add('on');bSlot=t;bRefresh();}
+function bSelDur(el,v,l){document.querySelectorAll('#s12 .dur').forEach(d=>d.classList.remove('on'));el.classList.add('on');bDur=v;bDurLbl=l;bRefresh();}
+function bChg(id,d){
+  if(id==='ba'){bAdult=Math.max(0,bAdult+d);document.getElementById('bpa').textContent=bAdult;}
+  if(id==='be'){bChild=Math.max(0,bChild+d);document.getElementById('bpe').textContent=bChild;}
+  bRefresh();
+}
+function bRefresh(){
+  if(!bSlot)return;
+  const tot=(bAdult+bChild);const total=bPrice*tot;
+  document.getElementById('b-recap').style.display='block';
+  document.getElementById('b-div2').style.display='block';
+  document.getElementById('b-pay-section').style.display='block';
+  document.getElementById('br-lane').textContent=bLane;
+  document.getElementById('br-slot2').textContent=(DATES[bDateIdx]||DATES[0])+' · '+bSlot;
+  document.getElementById('br-pax').textContent=bAdult+' adulte'+(bAdult>1?'s':'')+(bChild>0?' · '+bChild+' enfant'+(bChild>1?'s':''):'');
+  document.getElementById('br-total').textContent=total+' €';
+  document.getElementById('b-pay-total').textContent=total+' €';
+}
+function bUpdBtn(){document.getElementById('b-pay-btn').classList.toggle('off',!bCGV);}
+function bBuildTicket(){
+  const tot=(bAdult+bChild)*bPrice;
+  document.getElementById('bt-lane').textContent=bLane;
+  document.getElementById('bt-det').textContent=(DATES[bDateIdx]||DATES[0])+' · '+(bSlot||'14h00')+' · '+bDur;
+  document.getElementById('bt-pax').textContent=(bAdult+bChild)+' joueur'+((bAdult+bChild)>1?'s':'');
+  document.getElementById('bt-total').textContent=tot+' €';
+}
+</script>
+</body>
+</html>
