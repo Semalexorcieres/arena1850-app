@@ -3839,7 +3839,7 @@ body {
     </div>
 
 
-    <!-- ===== 5.2 Mes pass — VIDE ===== -->
+    <!-- ===== 5.2 Mes pass — LISTE (1 pass = 1 bloc) ===== -->
     <div class="frame">
       <div class="phone">
         <div class="notch"></div>
@@ -3859,72 +3859,141 @@ body {
               <button style="width: 40px; height: 40px; border-radius: 50%; background: var(--c-gray-1); border: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--c-text)" stroke-width="2.2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
               </button>
-              <h1 class="s-title-l">Mes pass</h1>
-              <button style="margin-left: auto; padding: 10px 16px; background: var(--c-gray-1); border: none; border-radius: 100px; display: flex; align-items: center; gap: 6px;">
+              <h1 class="s-title-l" style="font-size: 24px; white-space: nowrap;">Mes pass</h1>
+              <button style="margin-left: auto; padding: 9px 14px; background: var(--c-gray-1); border: none; border-radius: 100px; display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--c-text)" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 <span class="subhead" style="font-size: 13px;">Ajouter</span>
               </button>
-            </div>
-
-            <!-- Carte forfait grise vide -->
-            <div style="padding: 16px 24px 0;">
-              <div style="border-radius: var(--r-lg); background: var(--c-gray-1); padding: 22px; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 18px; right: 18px; padding: 6px 12px; background: white; border-radius: 100px;">
-                  <span class="micro" style="color: var(--c-gray-5); font-family: 'SF Mono', monospace; letter-spacing: 0.04em; font-size: 10px;">01-1614713...562342-4</span>
-                </div>
-
-                <div style="margin-top: 50px; padding: 14px 0; opacity: 0.18;">
-                  <svg viewBox="0 0 240 60" style="width: 220px; height: 50px;">
-                    <text x="0" y="40" style="font-family: 'Marvin Visions Big', sans-serif; font-size: 30px; font-weight: 700; fill: var(--c-text); letter-spacing: -0.01em;">ORCIÈRES 1850</text>
-                  </svg>
-                </div>
-
-                <div style="display: flex; align-items: center; gap: 8px; margin-top: 24px;">
-                  <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--c-gray-4);"></span>
-                  <span class="subhead" style="font-size: 14px; color: var(--c-text);">Aucun produit sur ce pass</span>
-                </div>
-
-                <div style="display: flex; align-items: center; gap: 12px; margin-top: 14px; padding: 12px; background: white; border-radius: 14px;">
-                  <div class="avatar-ap" style="width: 44px; height: 44px;">AP</div>
-                  <div>
-                    <div class="subhead" style="font-size: 14px;">Alexandre Potie</div>
-                    <div class="caption" style="margin-top: 2px;">Né(e) le 28/12/1998</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- CTA Acheter forfait -->
-            <div style="padding: 20px 24px 0;">
-              <button class="btn-primary" style="height: 54px;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Acheter un forfait
+              <button style="width: 38px; height: 38px; border-radius: 50%; background: var(--c-gray-1); border: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--c-text)"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>
               </button>
             </div>
 
-            <!-- Empty state -->
-            <div style="padding: 32px 24px 0;">
-              <div class="s-title" style="margin-bottom: 14px;">Prochaines réservations</div>
+            <p class="caption" style="padding: 2px 24px 0;">3 pass · <span style="color: #2BA866; font-weight: 700;">1 activé</span> · 2 à activer</p>
 
-              <div style="border-radius: var(--r-lg); background: var(--c-gray-1); padding: 28px 22px; text-align: center;">
-                <div style="height: 140px; position: relative; display: flex; justify-content: center; align-items: center;">
-                  <div class="bg-mountain" style="position: absolute; left: 24%; top: 12px; width: 76px; height: 92px; border-radius: 12px; border: 3px solid white; box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: rotate(-9deg); display: flex; align-items: center; justify-content: center;">
-                    <span style="display: inline-flex; width: 30px; height: 30px; color: rgba(255,255,255,0.95); transform: rotate(9deg);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><line x1="3" y1="12" x2="21" y2="12" opacity="0.3"/></svg></span>
+            <!-- ===== PASS 1 — ACTIVÉ (pass virtuel) ===== -->
+            <div style="padding: 16px 24px 0;">
+              <div style="border-radius: var(--r-lg); overflow: hidden; border: 1.5px solid #B7E4C9; box-shadow: 0 6px 20px -10px rgba(43,168,102,0.4);">
+
+                <!-- En-tête statut ACTIVÉ -->
+                <div style="display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: #E9F7EF;">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #2BA866;"></span>
+                  <span class="micro" style="color: #1E7D4C;">ACTIVÉ · PASS VIRTUEL</span>
+                  <span style="margin-left: auto; display: flex; align-items: center; gap: 5px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1E7D4C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg>
+                    <span class="caption" style="color: #1E7D4C; font-weight: 600;">Connecté</span>
+                  </span>
+                </div>
+
+                <!-- Corps -->
+                <div style="background: white; padding: 18px;">
+                  <div style="display: flex; align-items: flex-start; gap: 12px;">
+                    <div style="flex: 1;">
+                      <div class="display-m" style="font-size: 20px;">6 jours Horizon</div>
+                      <div class="caption" style="margin-top: 4px;">Adulte · Tout domaine Orcières 1850</div>
+                    </div>
+                    <!-- toggle ON -->
+                    <div style="width: 46px; height: 28px; border-radius: 100px; background: #2BA866; position: relative; flex-shrink: 0;">
+                      <span style="position: absolute; top: 3px; right: 3px; width: 22px; height: 22px; border-radius: 50%; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></span>
+                    </div>
                   </div>
-                  <div class="bg-ski" style="position: absolute; left: 38%; top: 4px; width: 76px; height: 92px; border-radius: 12px; border: 3px solid white; box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: rotate(-2deg); display: flex; align-items: center; justify-content: center;">
-                    <span style="display: inline-flex; width: 30px; height: 30px; color: rgba(255,255,255,0.95); transform: rotate(2deg);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21l8-15"/><path d="M11 21l8-15"/><circle cx="14" cy="4" r="1.5"/><path d="M3 18l16-1"/></svg></span>
+
+                  <!-- skieur + support -->
+                  <div style="display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 12px 14px; background: var(--c-gray-1); border-radius: 14px;">
+                    <div class="avatar-ap" style="width: 40px; height: 40px;">AP</div>
+                    <div style="flex: 1;">
+                      <div class="subhead" style="font-size: 14px;">Alexandre Potie</div>
+                      <div class="caption" style="margin-top: 2px;">iPhone d'Alexandre · Bluetooth</div>
+                    </div>
                   </div>
-                  <div class="bg-bowling" style="position: absolute; left: 50%; top: 0; width: 76px; height: 92px; border-radius: 12px; border: 3px solid white; box-shadow: 0 4px 16px rgba(0,0,0,0.12); transform: translateX(-50%) rotate(2deg); z-index: 2; display: flex; align-items: center; justify-content: center;">
-                    <span style="display: inline-flex; width: 30px; height: 30px; color: rgba(255,255,255,0.95); transform: rotate(-2deg);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9.5" cy="9.5" r="0.9" fill="currentColor"/><circle cx="13" cy="9" r="0.9" fill="currentColor"/><circle cx="11.5" cy="12.5" r="0.9" fill="currentColor"/></svg></span>
-                  </div>
-                  <div class="bg-spa" style="position: absolute; right: 22%; top: 6px; width: 76px; height: 92px; border-radius: 12px; border: 3px solid white; box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: rotate(8deg); display: flex; align-items: center; justify-content: center;">
-                    <span style="display: inline-flex; width: 30px; height: 30px; color: rgba(255,255,255,0.95); transform: rotate(-8deg);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-3 4-5 6.5-5 10a5 5 0 0 0 10 0c0-3.5-2-6-5-10z"/><path d="M9 13c.5 1.5 1.5 2.5 3 3"/></svg></span>
+
+                  <!-- stats + détail -->
+                  <div style="display: flex; align-items: center; gap: 14px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--c-gray-2);">
+                    <span class="caption" style="color: var(--c-gray-5);">2 j restants</span>
+                    <span class="caption" style="color: var(--c-gray-4);">·</span>
+                    <span class="caption" style="color: var(--c-gray-5);">exp. 25 déc.</span>
+                    <button style="margin-left: auto; display: flex; align-items: center; gap: 4px; background: none; border: none; color: var(--c-primary); font-size: 13px; font-weight: 600;">
+                      Détail
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)" stroke-width="2.4" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
                   </div>
                 </div>
-                <div class="subhead" style="margin-top: 18px;">Vos prochaines aventures commencent ici</div>
-                <p class="body" style="margin-top: 6px; max-width: 280px; margin-left: auto; margin-right: auto;">Réservez vos visites et retrouvez-les facilement dans votre espace.</p>
-                <button class="btn-primary-pill" style="background: var(--c-text); margin-top: 16px;">Découvrir les visites</button>
               </div>
+            </div>
+
+            <!-- ===== PASS 2 — À ACTIVER ===== -->
+            <div style="padding: 14px 24px 0;">
+              <div style="border-radius: var(--r-lg); overflow: hidden; border: 1.5px solid var(--c-gray-3);">
+
+                <div style="display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: #FFF6E9;">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #FBB034;"></span>
+                  <span class="micro" style="color: #B5781A;">À ACTIVER · AUCUN SUPPORT</span>
+                </div>
+
+                <div style="background: white; padding: 18px;">
+                  <div style="display: flex; align-items: flex-start; gap: 12px;">
+                    <div style="flex: 1;">
+                      <div class="display-m" style="font-size: 20px;">1 jour Flex</div>
+                      <div class="caption" style="margin-top: 4px;">Enfant · Espace débutant</div>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 12px 14px; background: var(--c-gray-1); border-radius: 14px;">
+                    <div class="avatar-ap" style="width: 40px; height: 40px; background: #6C7A92;">EP</div>
+                    <div style="flex: 1;">
+                      <div class="subhead" style="font-size: 14px;">Emma Potie</div>
+                      <div class="caption" style="margin-top: 2px; color: var(--c-gray-4);">Aucun support attribué</div>
+                    </div>
+                  </div>
+
+                  <!-- bouton ACTIVER -->
+                  <button class="btn-primary" style="height: 48px; margin-top: 14px;">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    Activer ce pass
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== PASS 3 — À ACTIVER ===== -->
+            <div style="padding: 14px 24px 0;">
+              <div style="border-radius: var(--r-lg); overflow: hidden; border: 1.5px solid var(--c-gray-3);">
+
+                <div style="display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: #FFF6E9;">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #FBB034;"></span>
+                  <span class="micro" style="color: #B5781A;">À ACTIVER · AUCUN SUPPORT</span>
+                </div>
+
+                <div style="background: white; padding: 18px;">
+                  <div style="display: flex; align-items: flex-start; gap: 12px;">
+                    <div style="flex: 1;">
+                      <div class="display-m" style="font-size: 20px;">1 jour Découverte</div>
+                      <div class="caption" style="margin-top: 4px;">Adulte · Tout domaine Orcières 1850</div>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 12px 14px; background: var(--c-gray-1); border-radius: 14px;">
+                    <div class="avatar-ap" style="width: 40px; height: 40px; background: #9A6CB0;">CP</div>
+                    <div style="flex: 1;">
+                      <div class="subhead" style="font-size: 14px;">Camille Potie</div>
+                      <div class="caption" style="margin-top: 2px; color: var(--c-gray-4);">Aucun support attribué</div>
+                    </div>
+                  </div>
+
+                  <button class="btn-primary" style="height: 48px; margin-top: 14px;">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    Activer ce pass
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Acheter -->
+            <div style="padding: 20px 24px 0;">
+              <button class="btn-secondary" style="height: 52px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--c-text)" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Acheter un forfait
+              </button>
             </div>
 
           </div>
@@ -3940,13 +4009,12 @@ body {
       </div>
       <div class="frame-cap">
         <span class="num">5.2 · COMPTE</span>
-        <div class="lbl">Mes pass · vide</div>
-        <div class="desc">Carte forfait grise · empty state inspiré MBNR.</div>
+        <div class="lbl">Mes pass · liste (1 pass = 1 bloc)</div>
+        <div class="desc">Tous les pass empilés · activé en vert + toggle · inactif avec bouton Activer.</div>
       </div>
     </div>
 
-
-    <!-- ===== 5.3 Mes pass — AVEC FORFAIT ACTIF ===== -->
+    <!-- ===== 5.3 Choix du support — bottom sheet ===== -->
     <div class="frame">
       <div class="phone">
         <div class="notch"></div>
@@ -3959,150 +4027,82 @@ body {
     <svg viewBox="0 0 25 12"><rect x="0.5" y="1" width="20" height="10" rx="2.5" fill="none" stroke="#0F1A2E" stroke-width="1" opacity="0.4"/><rect x="2" y="2.5" width="17" height="7" rx="1" fill="#0F1A2E"/><rect x="21" y="4" width="1.5" height="4" rx="0.5" fill="#0F1A2E" opacity="0.4"/></svg>
   </div>
 </div>
-          <div class="screen-content" style="padding-bottom: 110px;">
+          <!-- fond grisé (carte derrière) -->
+          <div class="screen-content" style="padding-bottom: 0; background: var(--c-gray-1);">
             <div class="screen-pad-top"></div>
-
-            <div style="padding: 12px 24px; display: flex; align-items: center; gap: 12px;">
-              <button style="width: 40px; height: 40px; border-radius: 50%; background: var(--c-gray-1); border: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--c-text)" stroke-width="2.2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-              </button>
+            <div style="padding: 12px 24px; display: flex; align-items: center; gap: 12px; opacity: 0.5;">
+              <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--c-gray-2);"></div>
               <h1 class="s-title-l">Mes pass</h1>
-              <button style="margin-left: auto; padding: 10px 16px; background: var(--c-gray-1); border: none; border-radius: 100px; display: flex; align-items: center; gap: 6px;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--c-text)" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                <span class="subhead" style="font-size: 13px;">Ajouter</span>
-              </button>
             </div>
-
-            <!-- Carte forfait active -->
-            <div style="padding: 16px 24px 0;">
-              <div style="border-radius: var(--r-lg); background: linear-gradient(135deg, var(--c-primary) 0%, var(--c-primary-deepest) 100%); padding: 22px; color: white; position: relative; overflow: hidden; box-shadow: 0 8px 24px -8px rgba(33, 78, 146, 0.4);">
-                <svg viewBox="0 0 350 200" style="position: absolute; bottom: -20px; right: -20px; width: 240px; opacity: 0.13;">
-                  <path d="M0,180 L60,80 L130,140 L210,40 L290,120 L350,80 L350,200 L0,200 Z" fill="white"/>
-                </svg>
-
-                <div style="position: absolute; top: 18px; right: 18px; padding: 6px 8px 6px 12px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border-radius: 100px; display: flex; align-items: center; gap: 8px;">
-                  <span class="micro" style="color: rgba(255,255,255,0.95); font-family: 'SF Mono', monospace; letter-spacing: 0.04em; font-size: 10px;">01-1614713...562342-4</span>
-                  <button style="width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,0.25); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                  </button>
-                </div>
-
-                <div class="micro" style="color: rgba(255,255,255,0.7); position: relative; z-index: 2;">FORFAIT ACTIF</div>
-                <div class="display-l" style="color: white; font-size: 30px; margin-top: 6px; position: relative; z-index: 2;">6 jours Horizon</div>
-                <div class="caption" style="color: rgba(255,255,255,0.85); margin-top: 6px; position: relative; z-index: 2;">Adulte · Tout domaine Orcières 1850</div>
-
-                <div style="display: flex; gap: 14px; margin-top: 22px; padding: 14px; background: rgba(255,255,255,0.1); border-radius: 14px; position: relative; z-index: 2;">
-                  <div style="flex: 1;">
-                    <div class="micro" style="color: rgba(255,255,255,0.65);">RESTANT</div>
-                    <div class="display-m" style="color: white; font-size: 22px; margin-top: 2px;">2 jours</div>
-                  </div>
-                  <div style="width: 1px; background: rgba(255,255,255,0.2);"></div>
-                  <div style="flex: 1;">
-                    <div class="micro" style="color: rgba(255,255,255,0.65);">EXPIRE</div>
-                    <div class="display-m" style="color: white; font-size: 22px; margin-top: 2px;">25 déc.</div>
-                  </div>
-                </div>
-
-                <div style="display: flex; gap: 8px; margin-top: 14px; position: relative; z-index: 2;">
-                  <button style="flex: 1; padding: 10px; background: white; color: var(--c-primary); border: none; border-radius: 100px; font-family: var(--font-headline); font-weight: 700; font-size: 13px;">Voir le QR</button>
-                  <button style="flex: 1; padding: 10px; background: rgba(255,255,255,0.16); color: white; border: 1px solid rgba(255,255,255,0.25); border-radius: 100px; font-family: var(--font-headline); font-weight: 600; font-size: 13px;">+ Apple Wallet</button>
-                </div>
-              </div>
+            <div style="padding: 16px 24px; opacity: 0.4;">
+              <div style="height: 140px; border-radius: var(--r-lg); background: white; border: 1.5px solid var(--c-gray-3);"></div>
             </div>
-
-            <!-- Holder -->
-            <div style="padding: 14px 24px 0;">
-              <div class="card" style="padding: 12px 14px; display: flex; align-items: center; gap: 12px;">
-                <div class="avatar-ap" style="width: 40px; height: 40px;">AP</div>
-                <div style="flex: 1;">
-                  <div class="subhead" style="font-size: 14px;">Alexandre Potie</div>
-                  <div class="caption" style="margin-top: 2px;">Né(e) le 28/12/1998</div>
-                </div>
-                <button style="background: none; border: none; color: var(--c-primary); font-size: 12px; font-weight: 600;">Modifier</button>
-              </div>
-            </div>
-
-            <!-- Prochaines réservations -->
-            <div style="padding: 28px 0 0;">
-              <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 0 24px; margin-bottom: 14px;">
-                <div class="s-title">Prochaines réservations</div>
-                <span class="caption" style="color: var(--c-primary); font-weight: 600;">3</span>
-              </div>
-
-              <div style="display: flex; gap: 12px; overflow-x: auto; padding: 0 24px 4px; scrollbar-width: none;">
-
-                <div style="flex-shrink: 0; width: 200px; border-radius: var(--r-lg); overflow: hidden; background: white; border: 1px solid var(--c-gray-3);">
-                  <div class="bg-bowling" style="height: 110px; position: relative; display: flex; align-items: center; justify-content: center;">
-                    <span style="display: inline-flex; width: 32px; height: 32px; color: rgba(255,255,255,0.85);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9.5" cy="9.5" r="0.9" fill="currentColor"/><circle cx="13" cy="9" r="0.9" fill="currentColor"/><circle cx="11.5" cy="12.5" r="0.9" fill="currentColor"/></svg></span>
-                    <span class="tag" style="position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,0.55); color: white; backdrop-filter: blur(6px);">DANS 4H</span>
-                  </div>
-                  <div style="padding: 12px;">
-                    <div class="subhead" style="font-size: 13px;">Bowling</div>
-                    <div class="caption" style="margin-top: 2px;">Mar 22 · 14:00 · 4 joueurs</div>
-                  </div>
-                </div>
-
-                <div style="flex-shrink: 0; width: 200px; border-radius: var(--r-lg); overflow: hidden; background: white; border: 1px solid var(--c-gray-3);">
-                  <div class="bg-karaoke" style="height: 110px; position: relative; display: flex; align-items: center; justify-content: center;">
-                    <span style="display: inline-flex; width: 32px; height: 32px; color: rgba(255,255,255,0.85);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg></span>
-                    <span class="tag" style="position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,0.55); color: white; backdrop-filter: blur(6px);">CE SOIR</span>
-                  </div>
-                  <div style="padding: 12px;">
-                    <div class="subhead" style="font-size: 13px;">Karaoké · Cabine 2</div>
-                    <div class="caption" style="margin-top: 2px;">Mar 22 · 19:30 · 6 pers.</div>
-                  </div>
-                </div>
-
-                <div style="flex-shrink: 0; width: 200px; border-radius: var(--r-lg); overflow: hidden; background: white; border: 1px solid var(--c-gray-3);">
-                  <div class="bg-resto-alt" style="height: 110px; position: relative;">
-                    <span class="tag" style="position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,0.55); color: white; backdrop-filter: blur(6px);">DEMAIN</span>
-                  </div>
-                  <div style="padding: 12px;">
-                    <div class="subhead" style="font-size: 13px;">Resto de Rocherousse</div>
-                    <div class="caption" style="margin-top: 2px;">Mer 23 · 12:30 · table 4</div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <!-- Historique -->
-            <div style="padding: 24px 24px 0;">
-              <div class="s-title" style="margin-bottom: 8px;">Historique</div>
-              <div style="border-radius: var(--r-lg); background: var(--c-gray-1); padding: 14px 16px;">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                  <div style="width: 40px; height: 40px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  </div>
-                  <div style="flex: 1;">
-                    <div class="subhead" style="font-size: 14px;">Voir l'historique d'utilisation</div>
-                    <div class="caption" style="margin-top: 2px;">28 passages · 6 jours skiés</div>
-                  </div>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--c-gray-4)" stroke-width="2.2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
-                </div>
-              </div>
-            </div>
-
           </div>
-          <div class="bottom-nav">
-<button class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg>Accueil</button>
-<button class="nav-item"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><circle cx="8" cy="14" r="0.8" fill="currentColor"/><circle cx="12" cy="14" r="0.8" fill="currentColor"/><circle cx="16" cy="14" r="0.8" fill="currentColor"/></svg>Agenda</button>
-<button class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 9V7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a2 2 0 0 0 0 4v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2a2 2 0 0 0 0-4z"/><line x1="9" y1="9" x2="9" y2="11"/><line x1="9" y1="13" x2="9" y2="15"/></svg>Réserver</button>
-<button class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 6 9 4l6 2 6-2v14l-6 2-6-2-6 2z"/><line x1="9" y1="4" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="20"/></svg>Plan</button>
-<button class="nav-item active"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg>Compte</button>
-</div>
-          <div class="home-indicator"></div>
+
+          <!-- scrim -->
+          <div style="position: absolute; inset: 0; background: rgba(15,26,46,0.5);"></div>
+
+          <!-- BOTTOM SHEET -->
+          <div style="position: absolute; left: 0; right: 0; bottom: 0; background: white; border-radius: 28px 28px 0 0; padding: 14px 24px 30px; box-shadow: 0 -8px 40px rgba(0,0,0,0.25);">
+            <div style="width: 40px; height: 5px; border-radius: 100px; background: var(--c-gray-3); margin: 0 auto 18px;"></div>
+
+            <h2 class="s-title-l" style="font-size: 22px;">Choisir un support</h2>
+            <p class="body" style="margin-top: 6px;">Sur quel support souhaitez-vous activer le forfait <strong style="color: var(--c-text);">6 jours Horizon</strong> ?</p>
+
+            <!-- Option 1 : Pass virtuel (recommandé) -->
+            <div style="margin-top: 20px; border: 2px solid var(--c-primary); border-radius: var(--r-md); padding: 16px; display: flex; align-items: center; gap: 14px; position: relative; background: var(--c-primary-lighter);">
+              <span class="tag" style="position: absolute; top: -10px; left: 16px; background: var(--c-primary); color: white;">RECOMMANDÉ</span>
+              <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--c-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg>
+              </div>
+              <div style="flex: 1;">
+                <div class="subhead" style="font-size: 15px;">Pass virtuel · ce téléphone</div>
+                <div class="caption" style="margin-top: 3px;">Mains libres en Bluetooth · rien à acheter</div>
+              </div>
+              <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--c-primary); display: flex; align-items: center; justify-content: center;">
+                <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--c-primary);"></span>
+              </div>
+            </div>
+
+            <!-- Option 2 : Carte mains-libres existante -->
+            <div style="margin-top: 12px; border: 1.5px solid var(--c-gray-3); border-radius: var(--r-md); padding: 16px; display: flex; align-items: center; gap: 14px;">
+              <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--c-gray-1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+              </div>
+              <div style="flex: 1;">
+                <div class="subhead" style="font-size: 15px;">Carte mains-libres</div>
+                <div class="caption" style="margin-top: 3px;">Saisir le n° d'une carte que je possède déjà</div>
+              </div>
+              <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--c-gray-3);"></div>
+            </div>
+
+            <!-- Option 3 : Nouvelle carte -->
+            <div style="margin-top: 12px; border: 1.5px solid var(--c-gray-3); border-radius: var(--r-md); padding: 16px; display: flex; align-items: center; gap: 14px;">
+              <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--c-gray-1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="12" y1="9" x2="12" y2="15"/><line x1="9" y1="12" x2="15" y2="12"/></svg>
+              </div>
+              <div style="flex: 1;">
+                <div class="subhead" style="font-size: 15px;">Nouvelle carte</div>
+                <div class="caption" style="margin-top: 3px;">Recevoir / retirer une carte (+ 2 €)</div>
+              </div>
+              <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--c-gray-3);"></div>
+            </div>
+
+            <button class="btn-primary" style="height: 54px; margin-top: 22px;">Continuer</button>
+          </div>
+
+          <div class="home-indicator" style="z-index: 100;"></div>
         </div>
       </div>
       <div class="frame-cap">
         <span class="num">5.3 · COMPTE</span>
-        <div class="lbl">Mes pass · forfait actif</div>
-        <div class="desc">Carte 6j Horizon + résa à venir + historique.</div>
+        <div class="lbl">Choix du support</div>
+        <div class="desc">Bottom sheet · pass virtuel (BLE) vs carte mains-libres vs nouvelle carte.</div>
       </div>
     </div>
 
 
-    <!-- ===== 5.4 Détail pass · QR grand format ===== -->
+    <!-- ===== 5.4 Détail pass · BLE (sans QR) ===== -->
     <div class="frame">
       <div class="phone">
         <div class="notch"></div>
@@ -4132,63 +4132,56 @@ body {
               <button style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.16); backdrop-filter: blur(20px); border: none; display: flex; align-items: center; justify-content: center;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
               </button>
-              <div class="subhead" style="color: white; font-size: 15px;">Mon forfait</div>
+              <div class="subhead" style="color: white; font-size: 15px;">Mon pass</div>
               <button style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.16); backdrop-filter: blur(20px); border: none; display: flex; align-items: center; justify-content: center;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
               </button>
             </div>
 
-            <div style="padding: 24px 24px 0; text-align: center; position: relative; z-index: 5;">
-              <div class="micro" style="color: rgba(255,255,255,0.7);">FORFAIT ACTIF · J4 / 6</div>
+            <div style="padding: 20px 24px 0; text-align: center; position: relative; z-index: 5;">
+              <div class="micro" style="color: rgba(255,255,255,0.7);">PASS VIRTUEL · J4 / 6</div>
               <h1 class="display-l" style="color: white; font-size: 34px; margin-top: 8px;">6 jours<br>Horizon</h1>
             </div>
 
-            <div style="padding: 24px 24px 0; position: relative; z-index: 5;">
-              <div style="background: white; border-radius: 28px; padding: 26px; box-shadow: 0 16px 48px rgba(0,0,0,0.25);">
-                <div style="width: 220px; height: 220px; margin: 0 auto; padding: 14px; background: white;">
-                  <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
-                    <rect width="100" height="100" fill="white"/>
-                    <g fill="#0F1A2E">
-                      <rect x="0" y="0" width="22" height="22"/>
-                      <rect x="78" y="0" width="22" height="22"/>
-                      <rect x="0" y="78" width="22" height="22"/>
-                      <rect x="4" y="4" width="14" height="14" fill="white"/>
-                      <rect x="82" y="4" width="14" height="14" fill="white"/>
-                      <rect x="4" y="82" width="14" height="14" fill="white"/>
-                      <rect x="8" y="8" width="6" height="6"/>
-                      <rect x="86" y="8" width="6" height="6"/>
-                      <rect x="8" y="86" width="6" height="6"/>
-                      <rect x="28" y="4" width="4" height="4"/><rect x="36" y="4" width="4" height="4"/><rect x="44" y="4" width="4" height="4"/><rect x="56" y="4" width="4" height="4"/><rect x="64" y="4" width="4" height="4"/>
-                      <rect x="28" y="12" width="4" height="4"/><rect x="40" y="12" width="4" height="4"/><rect x="52" y="12" width="4" height="4"/><rect x="60" y="12" width="4" height="4"/><rect x="68" y="12" width="4" height="4"/>
-                      <rect x="32" y="20" width="4" height="4"/><rect x="44" y="20" width="4" height="4"/><rect x="56" y="20" width="4" height="4"/><rect x="64" y="20" width="4" height="4"/>
-                      <rect x="4" y="28" width="4" height="4"/><rect x="16" y="28" width="4" height="4"/><rect x="28" y="28" width="4" height="4"/><rect x="36" y="28" width="4" height="4"/><rect x="48" y="28" width="4" height="4"/><rect x="60" y="28" width="4" height="4"/><rect x="76" y="28" width="4" height="4"/><rect x="88" y="28" width="4" height="4"/>
-                      <rect x="8" y="36" width="4" height="4"/><rect x="20" y="36" width="4" height="4"/><rect x="32" y="36" width="4" height="4"/><rect x="40" y="36" width="4" height="4"/><rect x="52" y="36" width="4" height="4"/><rect x="64" y="36" width="4" height="4"/><rect x="80" y="36" width="4" height="4"/>
-                      <rect x="4" y="44" width="4" height="4"/><rect x="16" y="44" width="4" height="4"/><rect x="36" y="44" width="4" height="4"/><rect x="48" y="44" width="4" height="4"/><rect x="60" y="44" width="4" height="4"/><rect x="72" y="44" width="4" height="4"/><rect x="84" y="44" width="4" height="4"/>
-                      <rect x="12" y="52" width="4" height="4"/><rect x="24" y="52" width="4" height="4"/><rect x="36" y="52" width="4" height="4"/><rect x="44" y="52" width="4" height="4"/><rect x="56" y="52" width="4" height="4"/><rect x="68" y="52" width="4" height="4"/><rect x="80" y="52" width="4" height="4"/><rect x="92" y="52" width="4" height="4"/>
-                      <rect x="4" y="60" width="4" height="4"/><rect x="20" y="60" width="4" height="4"/><rect x="32" y="60" width="4" height="4"/><rect x="44" y="60" width="4" height="4"/><rect x="60" y="60" width="4" height="4"/><rect x="76" y="60" width="4" height="4"/><rect x="88" y="60" width="4" height="4"/>
-                      <rect x="8" y="68" width="4" height="4"/><rect x="24" y="68" width="4" height="4"/><rect x="40" y="68" width="4" height="4"/><rect x="52" y="68" width="4" height="4"/><rect x="68" y="68" width="4" height="4"/><rect x="80" y="68" width="4" height="4"/>
-                      <rect x="28" y="76" width="4" height="4"/><rect x="40" y="76" width="4" height="4"/><rect x="56" y="76" width="4" height="4"/><rect x="64" y="76" width="4" height="4"/><rect x="76" y="76" width="4" height="4"/><rect x="88" y="76" width="4" height="4"/>
-                      <rect x="32" y="84" width="4" height="4"/><rect x="44" y="84" width="4" height="4"/><rect x="60" y="84" width="4" height="4"/><rect x="72" y="84" width="4" height="4"/><rect x="84" y="84" width="4" height="4"/>
-                      <rect x="28" y="92" width="4" height="4"/><rect x="44" y="92" width="4" height="4"/><rect x="56" y="92" width="4" height="4"/><rect x="68" y="92" width="4" height="4"/><rect x="80" y="92" width="4" height="4"/><rect x="92" y="92" width="4" height="4"/>
-                    </g>
-                  </svg>
+            <!-- Carte centrale BLE (remplace le QR) -->
+            <div style="padding: 22px 24px 0; position: relative; z-index: 5;">
+              <div style="background: white; border-radius: 28px; padding: 28px 26px; box-shadow: 0 16px 48px rgba(0,0,0,0.25);">
+
+                <!-- Pastille BLE animée -->
+                <div style="width: 150px; height: 150px; margin: 0 auto; position: relative; display: flex; align-items: center; justify-content: center;">
+                  <span style="position: absolute; inset: 0; border-radius: 50%; background: var(--c-primary); opacity: 0.08;"></span>
+                  <span style="position: absolute; inset: 22px; border-radius: 50%; background: var(--c-primary); opacity: 0.12;"></span>
+                  <div style="width: 92px; height: 92px; border-radius: 50%; background: linear-gradient(135deg, var(--c-primary) 0%, var(--c-primary-deepest) 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 28px -8px rgba(33,78,146,0.6);">
+                    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg>
+                  </div>
                 </div>
 
+                <div style="text-align: center; margin-top: 8px;">
+                  <div style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #E9F7EF; border-radius: 100px;">
+                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #2BA866;"></span>
+                    <span class="subhead" style="font-size: 13px; color: #1E7D4C;">Prêt · passez aux bornes</span>
+                  </div>
+                </div>
+
+                <!-- support -->
                 <div style="text-align: center; margin-top: 16px;">
-                  <div class="micro" style="color: var(--c-gray-4);">NUMÉRO DE CARTE</div>
-                  <div class="subhead" style="font-size: 14px; margin-top: 4px; font-family: 'SF Mono', monospace; letter-spacing: 0.06em;">01-1614713 3534605 562342-4</div>
+                  <div class="micro" style="color: var(--c-gray-4);">SUPPORT</div>
+                  <div class="subhead" style="font-size: 14px; margin-top: 4px;">iPhone d'Alexandre · Bluetooth</div>
                 </div>
 
+                <!-- titulaire -->
                 <div style="display: flex; align-items: center; gap: 12px; margin-top: 18px; padding: 14px; background: var(--c-gray-1); border-radius: 14px;">
                   <div class="avatar-ap" style="width: 44px; height: 44px;">AP</div>
                   <div style="flex: 1;">
                     <div class="subhead" style="font-size: 14px;">Alexandre Potie</div>
                     <div class="caption" style="margin-top: 2px;">Adulte · Né(e) le 28/12/1998</div>
                   </div>
+                  <button style="background: none; border: none; color: var(--c-primary); font-size: 12px; font-weight: 600;">Changer<br>de support</button>
                 </div>
               </div>
             </div>
 
+            <!-- stats -->
             <div style="padding: 18px 24px 0; position: relative; z-index: 5;">
               <div style="display: flex; gap: 8px;">
                 <div style="flex: 1; padding: 14px; background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 14px; text-align: center;">
@@ -4206,11 +4199,19 @@ body {
               </div>
             </div>
 
-            <div style="padding: 16px 24px 0; position: relative; z-index: 5;">
-              <button class="btn-apple-pay" style="background: var(--c-text); height: 50px;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-                Ajouter à Apple Wallet
-              </button>
+            <!-- Actions : Racheter + Partager -->
+            <div style="padding: 18px 24px 0; position: relative; z-index: 5;">
+              <div style="display: flex; gap: 10px;">
+                <button style="flex: 1; height: 52px; border-radius: 100px; background: white; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-body); font-weight: 700; font-size: 14px; color: var(--c-primary);">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v6h6"/><path d="M3 8a9 9 0 1 0 2.5-5.9L3 8"/></svg>
+                  Racheter
+                </button>
+                <button style="flex: 1; height: 52px; border-radius: 100px; background: rgba(255,255,255,0.16); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-body); font-weight: 700; font-size: 14px; color: white;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                  Partager
+                </button>
+              </div>
+              <p class="caption" style="text-align: center; margin-top: 10px; color: rgba(255,255,255,0.7);">Partagez ce pass pour le transférer sur le téléphone d'un proche.</p>
             </div>
 
           </div>
@@ -4219,11 +4220,99 @@ body {
       </div>
       <div class="frame-cap">
         <span class="num">5.4 · COMPTE</span>
-        <div class="lbl">Détail pass · QR plein écran</div>
-        <div class="desc">QR grand format · n° complet · stats live + Wallet.</div>
+        <div class="lbl">Détail pass · BLE</div>
+        <div class="desc">Pass virtuel sans QR · état Bluetooth · Racheter le même + Partager (transfert).</div>
       </div>
     </div>
 
+    <!-- ===== 5.2b Anciens pass — bottom sheet (rachat) ===== -->
+    <div class="frame">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="phone-screen">
+          <div class="status-bar">
+  <span>9:41</span>
+  <div class="status-icons">
+    <svg viewBox="0 0 18 12" fill="#0F1A2E"><path d="M1 8.5h2v3H1zm4-2h2v5H5zm4-2h2v7H9zm4-2h2v9h-2zm4-2h2v11h-2z"/></svg>
+    <svg viewBox="0 0 16 12" fill="#0F1A2E"><path d="M8 3.5c1.5 0 2.9.6 4 1.5l1.4-1.4C11.9 2.2 10 1.5 8 1.5s-3.9.7-5.4 2.1L4 5c1.1-.9 2.5-1.5 4-1.5z"/><path d="M8 6c.8 0 1.6.3 2.1.8l1.4-1.4C10.6 4.5 9.3 4 8 4s-2.6.5-3.5 1.4l1.4 1.4C6.4 6.3 7.2 6 8 6z"/><circle cx="8" cy="9" r="1.2"/></svg>
+    <svg viewBox="0 0 25 12"><rect x="0.5" y="1" width="20" height="10" rx="2.5" fill="none" stroke="#0F1A2E" stroke-width="1" opacity="0.4"/><rect x="2" y="2.5" width="17" height="7" rx="1" fill="#0F1A2E"/><rect x="21" y="4" width="1.5" height="4" rx="0.5" fill="#0F1A2E" opacity="0.4"/></svg>
+  </div>
+</div>
+          <!-- fond grisé (liste derrière) -->
+          <div class="screen-content" style="padding-bottom: 0; background: var(--c-gray-1);">
+            <div class="screen-pad-top"></div>
+            <div style="padding: 12px 24px; display: flex; align-items: center; gap: 12px; opacity: 0.5;">
+              <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--c-gray-2);"></div>
+              <h1 class="s-title-l" style="font-size: 24px; white-space: nowrap;">Mes pass</h1>
+            </div>
+            <div style="padding: 16px 24px; opacity: 0.4;">
+              <div style="height: 150px; border-radius: var(--r-lg); background: white; border: 1.5px solid var(--c-gray-3);"></div>
+            </div>
+          </div>
+
+          <!-- scrim -->
+          <div style="position: absolute; inset: 0; background: rgba(15,26,46,0.5);"></div>
+
+          <!-- BOTTOM SHEET -->
+          <div style="position: absolute; left: 0; right: 0; bottom: 0; background: white; border-radius: 28px 28px 0 0; padding: 14px 24px 30px; box-shadow: 0 -8px 40px rgba(0,0,0,0.25); max-height: 78%; display: flex; flex-direction: column;">
+            <div style="width: 40px; height: 5px; border-radius: 100px; background: var(--c-gray-3); margin: 0 auto 18px;"></div>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <h2 class="s-title-l" style="font-size: 22px;">Anciens pass</h2>
+              <span class="tag" style="background: var(--c-gray-1); color: var(--c-gray-5);">EXPIRÉS</span>
+            </div>
+            <p class="body" style="margin-top: 6px;">Retrouvez vos pass passés et rachetez-les en un geste.</p>
+
+            <div style="margin-top: 18px; overflow-y: auto;">
+
+              <!-- Ancien pass 1 -->
+              <div style="display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--c-gray-2);">
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--c-gray-1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--c-gray-4)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg>
+                </div>
+                <div style="flex: 1;">
+                  <div class="subhead" style="font-size: 15px;">6 jours Horizon</div>
+                  <div class="caption" style="margin-top: 2px;">Alexandre P. · saison 2024-25</div>
+                </div>
+                <button class="btn-primary" style="width: auto; height: 38px; padding: 0 16px; font-size: 13px; flex-shrink: 0;">Racheter</button>
+              </div>
+
+              <!-- Ancien pass 2 -->
+              <div style="display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--c-gray-2);">
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--c-gray-1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--c-gray-4)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg>
+                </div>
+                <div style="flex: 1;">
+                  <div class="subhead" style="font-size: 15px;">1 jour Flex</div>
+                  <div class="caption" style="margin-top: 2px;">Emma P. · 14 fév. 2025</div>
+                </div>
+                <button class="btn-primary" style="width: auto; height: 38px; padding: 0 16px; font-size: 13px; flex-shrink: 0;">Racheter</button>
+              </div>
+
+              <!-- Ancien pass 3 -->
+              <div style="display: flex; align-items: center; gap: 14px; padding: 14px 0;">
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--c-gray-1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--c-gray-4)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg>
+                </div>
+                <div style="flex: 1;">
+                  <div class="subhead" style="font-size: 15px;">Saison Tribu</div>
+                  <div class="caption" style="margin-top: 2px;">Famille Potie · saison 2023-24</div>
+                </div>
+                <button class="btn-primary" style="width: auto; height: 38px; padding: 0 16px; font-size: 13px; flex-shrink: 0;">Racheter</button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="home-indicator" style="z-index: 100;"></div>
+        </div>
+      </div>
+      <div class="frame-cap">
+        <span class="num">5.2b · COMPTE</span>
+        <div class="lbl">Anciens pass · rachat</div>
+        <div class="desc">Ouvert via le menu ⋯ · liste des pass expirés avec bouton Racheter.</div>
+      </div>
+    </div>
 
     <!-- ===== 5.5 MES SKIEURS · famille de 4 ===== -->
     <div class="frame">
